@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @authors Karma, Vida, Henry Breco
+ * @author Karma
  *
  */
 package graphic;
