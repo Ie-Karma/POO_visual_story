@@ -3,7 +3,7 @@ package data;
 public abstract class DataFather {
 	
 	private String name;
-
+	
 	public String getName() {
 		return name;
 	}

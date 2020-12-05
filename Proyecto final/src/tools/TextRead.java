@@ -507,5 +507,4 @@ public class TextRead {
 		this.objets_ini = objets_ini;
 	}
 
-
 }

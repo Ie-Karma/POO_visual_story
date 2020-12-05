@@ -29,6 +29,36 @@ public class character extends DataFather{
 		
 	}
 	
+	/////////////////////////////////////////////////////Actions	
+	
+	public void moveTo(room newRoom) {
+		
+		location = newRoom;
+		
+	}
+	
+	public void askFor() {}
+	
+	public void giveTo() {}
+	
+	public void takeObjet(objet newObjet) {
+		
+		objet = newObjet;
+		
+	}
+	
+	public void dropObjet() {
+		
+		objet.setLocation(location);
+		objet.dropObjet();
+		objet = null;
+		
+	}
+	
+	public void skip() {}
+	
+	/////////////////////////////////////////////////////gets and sets
+	
 	public room getLocation() {
 		return location;
 	}

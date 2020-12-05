@@ -5,6 +5,7 @@ Cocina(Comedor)
 Dormitorio(Comedor, Jardín)
 <Personajes>
 Jorge(Comedor)
+Player(Comedor)
 Esther(Dormitorio)
 María(Jardín)
 <Objetos>

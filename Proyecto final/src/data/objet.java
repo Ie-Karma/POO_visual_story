@@ -11,6 +11,15 @@ public class objet extends DataFather{
 		
 	}
 	
+	/////////////////////////////////////////////////////Actions
+	
+	public void dropObjet() {
+		
+		owner = null;
+		
+	}
+	
+	/////////////////////////////////////////////////////gets and sets
 	public void getPosition() {
 		
 		if(owner == null) {
@@ -20,7 +29,7 @@ public class objet extends DataFather{
 		}else {System.out.print(owner.getName());}
 		
 	}
-	
+
 	public character getOwner() {
 		return owner;
 	}

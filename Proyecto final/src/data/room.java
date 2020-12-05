@@ -39,6 +39,22 @@ public class room extends DataFather{
 	public void setGuests(character guests) {
 		this.guests[guestsNum] = guests;
 	}
+	
+	public void resetGuests() {
+		
+		for(int i = 0; guests[i] != null; i++) {
+			
+			guests[i] = null;
+			
+		}
+		
+	}
+	
+	public void increaseGuestsNum() {
+		
+		guestsNum++;
+		
+	}
 
 	public int getGuestsNum() {
 		return guestsNum;
