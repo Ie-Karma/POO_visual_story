@@ -3,10 +3,14 @@ package data;
 public class character extends DataFather{
 	
 	private room location;
-	private objet objet;
+	private object object = null;
+	
+	private boolean asked = false;
 	
 	private room goal_location;
-	private objet goal_objet;
+	private object goal_object;
+	
+	private boolean goal_obj = false;
 	
 	@SuppressWarnings("unused")
 	private boolean GOAL = false;
@@ -18,8 +22,14 @@ public class character extends DataFather{
 	}
 
 	public boolean completeGoal() {
+				
+		if(goal_object == object) {
+			
+			goal_obj = true;
+			
+		}
 		
-		if(location == goal_location && (objet == goal_objet || goal_objet == null)) {
+		if(location == goal_location && (object == goal_object || goal_object == null)) {
 			return true;
 			}
 		
@@ -41,17 +51,17 @@ public class character extends DataFather{
 	
 	public void giveTo() {}
 	
-	public void takeObjet(objet newObjet) {
+	public void takeObject(object newObject) {
 		
-		objet = newObjet;
+		object = newObject;
 		
 	}
 	
-	public void dropObjet() {
+	public void dropObject() {
 		
-		objet.setLocation(location);
-		objet.dropObjet();
-		objet = null;
+		object.setLocation(location);
+		object.dropObject();
+		object = null;
 		
 	}
 	
@@ -67,12 +77,12 @@ public class character extends DataFather{
 		this.location = location;
 	}
 
-	public objet getObjet() {
-		return objet;
+	public object getObject() {
+		return object;
 	}
 
-	public void setObjet(objet objet) {
-		this.objet = objet;
+	public void setObject(object object) {
+		this.object = object;
 	}
 
 	public room getGoal_location() {
@@ -83,12 +93,29 @@ public class character extends DataFather{
 		this.goal_location = goal_location;
 	}
 
-	public objet getGoal_objet() {
-		return goal_objet;
+	public object getGoal_object() {
+		return goal_object;
 	}
 
-	public void setGoal_objet(objet goal_objet) {
-		this.goal_objet = goal_objet;
+	public void setGoal_object(object goal_object) {
+		this.goal_object = goal_object;
 	}
-	
+
+	public boolean isAsked() {
+		return asked;
+	}
+
+	public void setAsked(boolean asked) {
+		this.asked = asked;
+	}
+
+	public boolean isGoal_obj() {
+		return goal_obj;
+	}
+
+	public void setGoal_obj(boolean goal_obj) {
+		this.goal_obj = goal_obj;
+	}
+
+
 }

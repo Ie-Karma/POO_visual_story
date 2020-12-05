@@ -1,24 +1,26 @@
 import java.io.IOException;
+import java.util.Scanner;
 
 import data.*;
-import tools.TextRead;
+import tools.*;
 
 public class Main_pruebas {
 
-	//creamos arrays de los 3 tipos de objetos que usaremos
+	//creamos arrays de los 3 tipos de objectos que usaremos
 	static room[] rooms;
 	static character[] characters;
-	static objet[] objets;
+	static object[] objects;
+	static actionsTools tool = new actionsTools();
 		
 	public static void main(String[] args) throws IOException {
 
 		//iniciamos el TextRead de inicio
 		TextRead inicio = new TextRead();
 		
-		//con el txt leido igualamos los datos a los objetos creados
+		//con el txt leido igualamos los datos a los objectos creados
 		rooms = inicio.getRooms_ini();
 		characters = inicio.getChars_ini();
-		objets = inicio.getObjets_ini();
+		objects = inicio.getObjects_ini();
 		
 		//buscamos la posición de player en el array de characters y le colocamos en la posición 0
 		playerOnArray();
@@ -33,65 +35,55 @@ public class Main_pruebas {
 
 ///////////////////////////////////////////////////////////////////////test zone
 
-		for(int i = 0; rooms[i] != null; i++) {
+		pruebas();
 			
-			System.out.println(rooms[i].getName());
-			System.out.println("");
-			character guests[] = rooms[i].getGuests();
-			
-			for(int x = 0; guests[x] != null; x++) {
-				
-				System.out.println(guests[x].getName());
-				
-			}
-			
-			System.out.println("-----------------");
-			
-		}
-		
-		characters[0].moveTo(rooms[3]);
-		characters[1].dropObjet();
-		System.out.println("-----------------------");
-		updateGuests();
-		
-		for(int i = 0; rooms[i] != null; i++) {
-			
-			System.out.println(rooms[i].getName());
-			System.out.println("");
-			
-			if(rooms[i].getGuests() != null) {
-				
-				character guests[] = rooms[i].getGuests();
-				
-				for(int x = 0; guests[x] != null; x++) {
-				
-					System.out.println(guests[x].getName());
-				
-				}
-				
-			}
-			System.out.println("-----------------");
-			
-		}
-				
 ///////////////////////////////////////////////////////////////////////test zone
 		
 
 	}
-
-	private static void updateGuests() {
-		
-		for(int i = 0; rooms[i] != null; i++) {
+	
+	@SuppressWarnings("resource")
+	private static void pruebas() {
 			
-			rooms[i].setGuestsNum(0);
-			rooms[i].resetGuests();
+		int seleccion = 0;
+		boolean finish = false;
+		int ronda = 0;
+		
+		while (finish == false) {
+			
+			Scanner leer = new Scanner (System.in);
+			System.out.println("¿Otra ronda?");
+			seleccion = leer.nextInt();
+			
+			switch(seleccion) {
+			
+			case 2:printData();break;
+			
+			case 1:
+				System.out.println("Ronda " + ronda);
+				allCharacters();
+				tool.updateGuests(rooms, characters);
+				rooms = tool.getRooms_ran();
+				ronda++;
+				break;
+			
+			case 0:
+				finish = true;
+				break;
+			}
+			
 			
 		}
 		
+		
+	}
+
+	private static void allCharacters() {
+		
+		
 		for(int i = 0; characters[i] != null; i++) {
 			
-			characters[i].getLocation().setGuests(characters[i]);
-			characters[i].getLocation().increaseGuestsNum();
+			tool.randomAction(characters[i]);
 			
 		}
 		
@@ -106,13 +98,13 @@ public class Main_pruebas {
 			System.out.println("");
 			if(characters[i].getGoal_location() != null) {
 				
-				System.out.print("Su objetivo es llegar a " + characters[i].getGoal_location().getName());
+				System.out.print("Su objectivo es llegar a " + characters[i].getGoal_location().getName());
 
 			}
 			
-			if(characters[i].getGoal_objet() != null) {
+			if(characters[i].getGoal_object() != null) {
 				
-				System.out.print(" con " + characters[i].getGoal_objet().getName());
+				System.out.print(" con " + characters[i].getGoal_object().getName());
 				
 			}
 			System.out.println("");
@@ -121,10 +113,10 @@ public class Main_pruebas {
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private static void printData(){
 		
-		updateGuests();
+		tool.updateGuests(rooms, characters);
+		rooms = tool.getRooms_ran();
 		
 		System.out.println("");
 
@@ -141,7 +133,7 @@ public class Main_pruebas {
 		for(int i=0; characters[i]!=null; i++) {
 			
 			System.out.print("Character: " + characters[i].getName() + ". Situado en " + characters[i].getLocation().getName());
-			if(characters[i].getObjet() != null) {System.out.print(" y tiene " + characters[i].getObjet().getName());}
+			if(characters[i].getObject() != null) {System.out.print(" y tiene " + characters[i].getObject().getName());}
 			else {System.out.print(" y no tiene nada");}
 			System.out.println("");
 			
@@ -149,10 +141,10 @@ public class Main_pruebas {
 		
 		System.out.println("");
 
-		for(int i=0; objets[i] != null; i++) {
+		for(int i=0; objects[i] != null; i++) {
 			
-			System.out.print("Objet: " + objets[i].getName() + ". Situado en ");
-			objets[i].getPosition();
+			System.out.print("Object: " + objects[i].getName() + ". Situado en ");
+			objects[i].getPosition();
 			System.out.println("");
 			
 		}
@@ -168,9 +160,7 @@ public class Main_pruebas {
 			if(characters[i].getName().equals("PLAYER")) {pos = i;}
 			
 		}
-		
-		System.out.println("------------------");
-		
+				
 		if(pos != 0) {
 			
 			character comodin;

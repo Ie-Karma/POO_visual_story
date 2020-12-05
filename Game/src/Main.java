@@ -5,20 +5,20 @@ import tools.TextRead;
 
 public class Main {
 
-	//creamos arrays de los 3 tipos de objetos que usaremos
+	//creamos arrays de los 3 tipos de objectos que usaremos
 	static room[] rooms;
 	static character[] characters;
-	static objet[] objets;
+	static object[] objects;
 		
 	public static void main(String[] args) throws IOException {
 
 		//iniciamos el TextRead de inicio
 		TextRead inicio = new TextRead();
 		
-		//con el txt leido igualamos los datos a los objetos creados
+		//con el txt leido igualamos los datos a los objectos creados
 		rooms = inicio.getRooms_ini();
 		characters = inicio.getChars_ini();
-		objets = inicio.getObjets_ini();
+		objects = inicio.getObjects_ini();
 		
 		playerOnArray();
 		

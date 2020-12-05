@@ -12,7 +12,7 @@ public class TextRead {
 	private String inicio;
 	private room[] rooms_ini = new room[100];
 	private character[] chars_ini = new character[100];
-	private objet[] objets_ini = new objet[100];
+	private object[] objects_ini = new object[100];
 	private int room_num = 0;
 	private int char_num = 0;
 
@@ -61,7 +61,7 @@ public class TextRead {
             String string = sb.toString();
             string = string.toUpperCase();
  			setInicio(string);
- 			objetivosData(string);
+ 			objectivosData(string);
 			
 		} catch (FileNotFoundException e) {
 			
@@ -73,13 +73,13 @@ public class TextRead {
 		
 	}
 	
-	private void objetivosData(String todo) {
+	private void objectivosData(String todo) {
 		
 		int cont = 0;
 		boolean allChars = false;
-		boolean allObjets = false;
+		boolean allObjects = false;
 		
-		while(allChars == false && allObjets == false ) {
+		while(allChars == false && allObjects == false ) {
 			
 			while(cont < todo.length()) {
 				
@@ -97,7 +97,7 @@ public class TextRead {
 					case 'P':
 						while(todo.charAt(cont) != '>') {cont++;}
 						cont++;cont++;
-						if(allObjets == false) {goalDataObjets(cont);allObjets = true;}
+						if(allObjects == false) {goalDataObjects(cont);allObjects = true;}
 						break;
 					
 					}
@@ -167,7 +167,7 @@ public class TextRead {
 		
 	}
 
-	private void goalDataObjets(int cont_0) {
+	private void goalDataObjects(int cont_0) {
 		
 		String todo = getInicio();
 		String name = "";
@@ -210,7 +210,7 @@ public class TextRead {
 			
 			for(int i = 0; i<room_num;i++) {
 				
-				if(getObjets_ini()[i].getName().equals(goal)) {
+				if(getObjects_ini()[i].getName().equals(goal)) {
 					
 					obj_cont = i;
 					
@@ -218,7 +218,7 @@ public class TextRead {
 				
 			}
 			
-			getChars_ini()[char_cont].setGoal_objet(getObjets_ini()[obj_cont]);
+			getChars_ini()[char_cont].setGoal_object(getObjects_ini()[obj_cont]);
 			
 			name = "";
 			goal = "";
@@ -362,7 +362,7 @@ public class TextRead {
 		
 	}
 	
-	public void inicioDataObjets(int cont_0) {
+	public void inicioDataObjects(int cont_0) {
 		
 		String todo = getInicio();
 		String name = "";
@@ -375,7 +375,7 @@ public class TextRead {
 			
 			if(todo.charAt(cont) == '(') {
 				
-				getObjets_ini()[obj_num] = new objet(name);
+				getObjects_ini()[obj_num] = new object(name);
 				obj_num++;
 				name = "";
 				
@@ -391,7 +391,7 @@ public class TextRead {
 					
 					if(getRooms_ini()[x].getName().equals(loc)) {
 						
-						getObjets_ini()[loc_num].setLocation(getRooms_ini()[x]);
+						getObjects_ini()[loc_num].setLocation(getRooms_ini()[x]);
 						loc_num++;
 						loc = "";
 						
@@ -403,8 +403,8 @@ public class TextRead {
 					
 					if(getChars_ini()[x].getName().equals(loc)) {
 						
-						getObjets_ini()[loc_num].setOwner(getChars_ini()[x]);
-						getChars_ini()[x].setObjet(getObjets_ini()[loc_num]);
+						getObjects_ini()[loc_num].setOwner(getChars_ini()[x]);
+						getChars_ini()[x].setObject(getObjects_ini()[loc_num]);
 						loc_num++;
 						loc = "";
 						
@@ -433,10 +433,10 @@ public class TextRead {
 		String todo = getInicio();
 		boolean allRooms = false;
 		boolean allChars = false;
-		boolean allObjets = false;
+		boolean allObjects = false;
 		
 		
-		while(allRooms ==false && allChars == false && allObjets ==false) {
+		while(allRooms ==false && allChars == false && allObjects ==false) {
 			
 			while(cont < todo.length()) {
 				
@@ -460,7 +460,7 @@ public class TextRead {
 					case 'O':
 						while(todo.charAt(cont) != '>') {cont++;}
 						cont++;cont++;
-						if(allObjets == false) {inicioDataObjets(cont);allObjets = true;}
+						if(allObjects == false) {inicioDataObjects(cont);allObjects = true;}
 						break;
 					
 					}
@@ -499,12 +499,12 @@ public class TextRead {
 		this.chars_ini = chars_ini;
 	}
 
-	public objet[] getObjets_ini() {
-		return objets_ini;
+	public object[] getObjects_ini() {
+		return objects_ini;
 	}
 
-	public void setObjets_ini(objet[] objets_ini) {
-		this.objets_ini = objets_ini;
+	public void setObjects_ini(object[] objects_ini) {
+		this.objects_ini = objects_ini;
 	}
 
 }

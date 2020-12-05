@@ -5,7 +5,7 @@ public class room extends DataFather{
 	private int guestsNum = 0;
 	private character[] guests = new character[100];
 	
-	private room[] nextTo = new room [100];
+	private room[] nextTo = new room[100];
 	
 	public room(String name_set){
 		

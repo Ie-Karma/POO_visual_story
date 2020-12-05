@@ -1,11 +1,11 @@
 package data;
 
-public class objet extends DataFather{
+public class object extends DataFather{
 	
 	private character owner;
 	private room location;
 	
-	public objet(String name_set) {
+	public object(String name_set) {
 		
 		setName(name_set);
 		
@@ -13,7 +13,7 @@ public class objet extends DataFather{
 	
 	/////////////////////////////////////////////////////Actions
 	
-	public void dropObjet() {
+	public void dropObject() {
 		
 		owner = null;
 		
