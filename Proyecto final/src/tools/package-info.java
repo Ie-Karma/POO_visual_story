@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Karma
- *
- */
-package tools;
