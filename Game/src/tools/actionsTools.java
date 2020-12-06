@@ -98,13 +98,15 @@ public class actionsTools {
 			break;
 			
 		case 4: 	
-			System.out.println("TAKE OBJECT ");	
+			System.out.print("TAKE ");	
 			character.takeObject(character.getLocation().getObjects()[(int)(Math.random()*(character.getLocation().getObjectsNum()))]);
 			character.getObject().setLocation(null);
+			System.out.println(character.getObject().getName());
 			break;
 			
 		case 5: 	
-			System.out.println("DROP OBJECT");
+			System.out.print("DROP ");
+			System.out.println(character.getObject().getName());
 			character.dropObject();
 			break;
 
