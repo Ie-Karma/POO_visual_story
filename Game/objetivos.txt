@@ -1,5 +1,5 @@
 <Localización Personajes>
-Player(Comedor)
+Player(Cocina)
 Jorge(Jardín)
 Esther(Comedor)
 María(Comedor)

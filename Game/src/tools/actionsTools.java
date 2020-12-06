@@ -3,10 +3,10 @@ package tools;
 import data.*;
 
 public class actionsTools {
+		
+	private int podium = 1;
 	
-	private room rooms_ran[];
-	
-	public void randomAction(character character) {
+	public character randomAction(character character) {
 		
 		/*
 		options:
@@ -28,11 +28,22 @@ public class actionsTools {
 
 		if(character.completeGoal() == true) {
 			
+			if(character.getMedal() == 0) {
+				
+				System.out.println("Podium de " + character.getName());
+				character.setMedal(podium);
+				podium++;
+				
+			}
+			
 			choice = 0;
 			
 		}else {
 			
 			if(obj == null) {
+				
+				character.setAsked(false);
+				character.setAsker(null);
 				
 				if(randomAsked(character,0) > 0) {
 					options[optionsNum] = 2;
@@ -89,6 +100,7 @@ public class actionsTools {
 		case 4: 	
 			System.out.println("TAKE OBJECT ");	
 			character.takeObject(character.getLocation().getObjects()[(int)(Math.random()*(character.getLocation().getObjectsNum()))]);
+			character.getObject().setLocation(null);
 			break;
 			
 		case 5: 	
@@ -97,6 +109,8 @@ public class actionsTools {
 			break;
 
 		}
+		
+		return character;
 		
 	}
 	
@@ -114,31 +128,6 @@ public class actionsTools {
 		
 		character.setAsked(false);
 		character.setAsker(null);
-		
-	}
-
-	public room[] getRoomObjects(room[] rooms, object[] objects) {
-				
-		for(int o = 0; rooms[o] != null; o++) {
-			
-			int x = 0;
-			
-			for(int i = 0; objects[i] != null; i++) {
-			
-				if(objects[i].getLocation()==rooms[o]) {
-					
-					rooms[o].setObjects(x,objects[i]);
-					x++;
-					
-				}
-				
-			}
-			
-			rooms[o].setObjectsNum(x);
-			
-		}
-		
-		return rooms;
 		
 	}
 	
@@ -205,33 +194,5 @@ public class actionsTools {
 		return peopleNum;
 		
 	}
-	
-	public void updateGuests(room[] rooms, character[] characters) {
 		
-		for(int i = 0; rooms[i] != null; i++) {
-			
-			rooms[i].setGuestsNum(0);
-			rooms[i].resetGuests();
-			
-		}
-		
-		for(int i = 0; characters[i] != null; i++) {
-			
-			characters[i].getLocation().setGuests(characters[i]);
-			characters[i].getLocation().increaseGuestsNum();
-			
-		}
-	
-		rooms_ran = rooms;
-		
-	}
-
-	public room[] getRooms_ran() {
-		return rooms_ran;
-	}
-
-	public void setRooms_ran(room rooms_ran[]) {
-		this.rooms_ran = rooms_ran;
-	}
-	
 }

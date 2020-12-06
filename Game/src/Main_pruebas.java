@@ -11,9 +11,11 @@ public class Main_pruebas {
 	static character[] characters;
 	static object[] objects;
 	static actionsTools tool = new actionsTools();
+	static dataTools dataTool = new dataTools();
+	private int podium = 1;
 		
 	public static void main(String[] args) throws IOException {
-
+		
 		//iniciamos el TextRead de inicio
 		TextRead inicio = new TextRead();
 		
@@ -23,7 +25,7 @@ public class Main_pruebas {
 		objects = inicio.getObjects_ini();
 		
 		//buscamos la posición de player en el array de characters y le colocamos en la posición 0
-		playerOnArray();
+		characters = dataTool.playerOnArray(characters);
 		
 		//recorre todos los characters sumandole un guestsNum al room en el que estén
 		//de esta forma actualizo el numero de characters en cada room
@@ -48,6 +50,64 @@ public class Main_pruebas {
 		int seleccion = 0;
 		boolean finish = false;
 		int ronda = 0;
+	
+		
+		while(dataTool.endGame(characters) == false) {
+			
+			System.out.println("");
+
+			System.out.println("---------------------------------");
+			System.out.println("Ronda " + ronda);
+			System.out.println("---------------------------------");
+
+			System.out.println("");
+			
+			allCharacters();
+			dataTool.updateData(rooms,characters,objects);
+			rooms = dataTool.updateRooms(rooms);
+			ronda++;
+			
+		}
+		System.out.println("---------------------------------");
+		System.out.println("");
+
+		System.out.println("- THE GAME IS OVER, ALL PLAYERS HAVE REACHED THEIR GOALS -");
+		
+		System.out.println("");
+
+		int p = 0;
+		
+		for(int i = 0; characters[i] != null; i++) {
+			
+			p++;
+			//System.out.println(characters[i].getName() + " has finished " + characters[i].getMedal());
+			
+		}
+		for(int i = 0; characters[i] != null; i++) {
+			
+			if(characters[i].getMedal() == 0) {characters[i].setMedal(p);}
+			
+		}
+		
+		character[] podiumChars = new character[p];
+		
+		for(int i = 0; i<p; i++) {
+			
+			for(int x = 0; characters[x] != null; x++) {
+				
+				if(characters[x].getMedal() == (i+1)) {podiumChars[i] = characters[x];}
+				
+			}
+			
+		}
+		
+		for(int i = 0; characters[i] != null; i++) {
+			
+			System.out.println(characters[i].getName() + " has finished " + podiumChars[i].getMedal());
+			
+		}
+		
+		/*
 		
 		while (finish == false) {
 			
@@ -57,16 +117,17 @@ public class Main_pruebas {
 			
 			switch(seleccion) {
 			
+			case 3:
+				printGoals();break;
+			
 			case 2:				
-				rooms = tool.getRoomObjects(rooms,objects);
 				printData();break;
 			
 			case 1:
 				System.out.println("Ronda " + ronda);
 				allCharacters();
-				tool.updateGuests(rooms, characters);
-				rooms = tool.getRooms_ran();
-				rooms = tool.getRoomObjects(rooms,objects);
+				dataTool.updateData(rooms,characters,objects);
+				rooms = dataTool.updateRooms(rooms);
 				ronda++;
 				break;
 			
@@ -78,15 +139,15 @@ public class Main_pruebas {
 			
 		}
 		
+		*/
 		
 	}
 
 	private static void allCharacters() {
 		
-		
 		for(int i = 0; characters[i] != null; i++) {
 			
-			tool.randomAction(characters[i]);
+			characters[i] = tool.randomAction(characters[i]);
 			
 		}
 		
@@ -118,8 +179,8 @@ public class Main_pruebas {
 	
 	private static void printData(){
 		
-		tool.updateGuests(rooms, characters);
-		rooms = tool.getRooms_ran();
+		dataTool.updateData(rooms,characters,objects);
+		rooms = dataTool.updateRooms(rooms);
 		
 		System.out.println("");
 
@@ -152,27 +213,6 @@ public class Main_pruebas {
 			
 		}
 
-	}
-
-	private static void playerOnArray() {
-		
-		int pos = 0;
-		
-		for (int i = 0; characters[i] != null; i++) {
-			
-			if(characters[i].getName().equals("PLAYER")) {pos = i;}
-			
-		}
-				
-		if(pos != 0) {
-			
-			character comodin;
-			comodin = characters[0];
-			characters[0] = characters[pos];
-			characters[pos] = comodin;
-			
-		}
-		
 	}
 
 }

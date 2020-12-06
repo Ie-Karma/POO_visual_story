@@ -13,9 +13,8 @@ public class character extends DataFather{
 	
 	private boolean goal_obj = false;
 	
-	@SuppressWarnings("unused")
-	private boolean GOAL = false;
-	
+	private int medal = 0;
+		
 	public character(String name_set) {
 		
 		setName(name_set);
@@ -31,6 +30,7 @@ public class character extends DataFather{
 		}
 		
 		if(location == goal_location && (object == goal_object || goal_object == null)) {
+			//System.out.println(getName() + " has finished");
 			return true;
 			}
 		
@@ -125,6 +125,14 @@ public class character extends DataFather{
 
 	public void setAsker(character asker) {
 		this.asker = asker;
+	}
+
+	public int getMedal() {
+		return medal;
+	}
+
+	public void setMedal(int medal) {
+		this.medal = medal;
 	}
 
 
