@@ -5,6 +5,9 @@ public class room extends DataFather{
 	private int guestsNum = 0;
 	private character[] guests = new character[100];
 	
+	private int objectsNum = 0;
+	private object[] objects = new object[100];
+	
 	private room[] nextTo = new room[100];
 	
 	public room(String name_set){
@@ -62,6 +65,22 @@ public class room extends DataFather{
 
 	public void setGuestsNum(int guestsNum) {
 		this.guestsNum = guestsNum;
+	}
+
+	public object[] getObjects() {
+		return objects;
+	}
+
+	public void setObjects(int x, object object) {
+		this.objects[x] = object;
+	}
+
+	public int getObjectsNum() {
+		return objectsNum;
+	}
+
+	public void setObjectsNum(int onjectsNum) {
+		this.objectsNum = onjectsNum;
 	}
 	
 }

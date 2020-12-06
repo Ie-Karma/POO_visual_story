@@ -57,13 +57,16 @@ public class Main_pruebas {
 			
 			switch(seleccion) {
 			
-			case 2:printData();break;
+			case 2:				
+				rooms = tool.getRoomObjects(rooms,objects);
+				printData();break;
 			
 			case 1:
 				System.out.println("Ronda " + ronda);
 				allCharacters();
 				tool.updateGuests(rooms, characters);
 				rooms = tool.getRooms_ran();
+				rooms = tool.getRoomObjects(rooms,objects);
 				ronda++;
 				break;
 			
@@ -122,7 +125,7 @@ public class Main_pruebas {
 
 		for(int i=0; rooms[i]!=null; i++) {
 			
-			System.out.print("Room: " + rooms[i].getName() + ", hay " + rooms[i].getGuestsNum() + " personas y está pegado a ");
+			System.out.print("Room: " + rooms[i].getName() + ", hay " + rooms[i].getGuestsNum() + " personas y "+ rooms[i].getObjectsNum() +" objetos, está pegado a ");
 			rooms[i].printNextTo();
 			System.out.println("");
 			

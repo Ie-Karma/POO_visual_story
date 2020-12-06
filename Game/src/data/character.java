@@ -6,6 +6,7 @@ public class character extends DataFather{
 	private object object = null;
 	
 	private boolean asked = false;
+	private character asker;
 	
 	private room goal_location;
 	private object goal_object;
@@ -54,6 +55,7 @@ public class character extends DataFather{
 	public void takeObject(object newObject) {
 		
 		object = newObject;
+		object.setOwner(this);
 		
 	}
 	
@@ -115,6 +117,14 @@ public class character extends DataFather{
 
 	public void setGoal_obj(boolean goal_obj) {
 		this.goal_obj = goal_obj;
+	}
+
+	public character getAsker() {
+		return asker;
+	}
+
+	public void setAsker(character asker) {
+		this.asker = asker;
 	}
 
 

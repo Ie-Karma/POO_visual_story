@@ -13,12 +13,10 @@ public class actionsTools {
 		
 		skip = 0
 		move to = 1
-		
 		ask for = 2 (no object)
 		give to = 3
 		take object = 4 (no object)
 		drop object = 5
-		
 		*/
 		
 		object obj;
@@ -36,10 +34,14 @@ public class actionsTools {
 			
 			if(obj == null) {
 				
-				options[optionsNum] = 2;
-				optionsNum++;
-				options[optionsNum] = 4;
-				optionsNum++;
+				if(randomAsked(character,0) > 0) {
+					options[optionsNum] = 2;
+					optionsNum++;
+				}
+				if(character.getLocation().getObjectsNum() > 0) {
+					options[optionsNum] = 4;
+					optionsNum++;
+				}
 				
 			}else {
 				
@@ -52,12 +54,12 @@ public class actionsTools {
 				
 				options[optionsNum] = 5;
 				optionsNum++;
+				
 			}
 			
 			choice = options[choice];
 
 		}
-		
 
 		System.out.print(character.getName() + " has chosen ");
 		
@@ -75,18 +77,18 @@ public class actionsTools {
 			break;
 			
 		case 2: 	
-			System.out.println("ASK FOR");	
-			
+			System.out.print("ASK TO ");	
+			randomAsked(character,1);
 			break;
 			
 		case 3: 	
-			System.out.println("GIVE TO");	
-			
+			System.out.println("GIVE TO ");	
+			giveObject(character);
 			break;
 			
 		case 4: 	
-			System.out.println("TAKE OBJECT");	
-			
+			System.out.println("TAKE OBJECT ");	
+			character.takeObject(character.getLocation().getObjects()[(int)(Math.random()*(character.getLocation().getObjectsNum()))]);
 			break;
 			
 		case 5: 	
@@ -94,8 +96,49 @@ public class actionsTools {
 			character.dropObject();
 			break;
 
-		
 		}
+		
+	}
+	
+	private void giveObject(character character) {
+		
+		if(((int)(Math.random()*4))>0) {
+			
+			object obj = character.getObject();
+			character.setObject(null);
+			character.getAsker().takeObject(obj);;
+			
+			System.out.println(obj.getName() + " Entregado a " + obj.getOwner().getName());
+
+		}
+		
+		character.setAsked(false);
+		character.setAsker(null);
+		
+	}
+
+	public room[] getRoomObjects(room[] rooms, object[] objects) {
+				
+		for(int o = 0; rooms[o] != null; o++) {
+			
+			int x = 0;
+			
+			for(int i = 0; objects[i] != null; i++) {
+			
+				if(objects[i].getLocation()==rooms[o]) {
+					
+					rooms[o].setObjects(x,objects[i]);
+					x++;
+					
+				}
+				
+			}
+			
+			rooms[o].setObjectsNum(x);
+			
+		}
+		
+		return rooms;
 		
 	}
 	
@@ -107,12 +150,60 @@ public class actionsTools {
 		rooms = character.getLocation().getNextTo();
 		
 		for(int i = 0; rooms[i] != null; i++) {
+			
 			nextNum++;
+			
 		}
 		
 		rand = (int)(Math.random()*nextNum);
 		
 		return rooms[rand];
+		
+	}
+	
+	private int randomAsked(character character,int com) {
+		
+		character[] people;
+		int peopleNum = 0;
+		
+		people = character.getLocation().getGuests();
+		
+		if(com == 0) {
+			
+			for(int i = 0; people[i] != null; i++) {
+				
+				if(people[i].equals(character)) {peopleNum--;}
+				peopleNum++;
+				
+			}
+			
+		}else {
+			
+			for(int i = 0; people[i] != null; i++) {
+				
+				if(people[i].equals(character)) {peopleNum--;}
+				peopleNum++;
+				
+			}
+		
+				int random = (int)(Math.random()*peopleNum);
+				
+				if(people[random].equals(character)) {
+					
+					if(random==0) {random++;}
+					else {random--;}
+					
+				}
+				
+				people[random].setAsked(true);
+				people[random].setAsker(character);
+				
+				System.out.println(people[random].getName());
+			
+		}
+
+		return peopleNum;
+		
 	}
 	
 	public void updateGuests(room[] rooms, character[] characters) {
