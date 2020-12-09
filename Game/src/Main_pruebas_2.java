@@ -1,9 +1,13 @@
+import java.awt.Color;
 import java.io.IOException;
+
+import javax.swing.JFrame;
 
 import data.*;
 import tools.*;
+import graphic.*;
 
-public class Main_pruebas {
+public class Main_pruebas_2 {
 
 	//creamos arrays de los 3 tipos de objectos que usaremos
 	static room[] rooms;
@@ -11,7 +15,8 @@ public class Main_pruebas {
 	static object[] objects;
 	static actionsTools tool = new actionsTools();
 	static dataTools dataTool = new dataTools();
-		
+	static Kimput imput = new Kimput();	
+	static screen screen = new screen();
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -29,27 +34,22 @@ public class Main_pruebas {
 		//recorre todos los characters sumandole un guestsNum al room en el que estén
 		//de esta forma actualizo el numero de characters en cada room
 		//updateGuests();
-		
-		//prints de prueba para comprobar posiciones o goals
-		//printGoals();
-		//printData();
 
 ///////////////////////////////////////////////////////////////////////test zone
 
-		pruebas();
-			
+		//pruebas();
+						
 ///////////////////////////////////////////////////////////////////////test zone
 		
-
 	}
 	
+	@SuppressWarnings("unused")
 	private static void pruebas() {
 			
 		int ronda = 0;
 	
-		
 		while(dataTool.endGame(characters) == false) {
-			
+						
 			System.out.println("");
 
 			System.out.println("---------------------------------");
@@ -64,6 +64,7 @@ public class Main_pruebas {
 			ronda++;
 			
 		}
+		
 		System.out.println("---------------------------------");
 		System.out.println("");
 
@@ -76,7 +77,6 @@ public class Main_pruebas {
 		for(int i = 0; characters[i] != null; i++) {
 			
 			p++;
-			//System.out.println(characters[i].getName() + " has finished " + characters[i].getMedal());
 			
 		}
 		for(int i = 0; characters[i] != null; i++) {
@@ -103,40 +103,6 @@ public class Main_pruebas {
 			
 		}
 		
-		/*
-		
-		while (finish == false) {
-			
-			Scanner leer = new Scanner (System.in);
-			System.out.println("¿Otra ronda?");
-			seleccion = leer.nextInt();
-			
-			switch(seleccion) {
-			
-			case 3:
-				printGoals();break;
-			
-			case 2:				
-				printData();break;
-			
-			case 1:
-				System.out.println("Ronda " + ronda);
-				allCharacters();
-				dataTool.updateData(rooms,characters,objects);
-				rooms = dataTool.updateRooms(rooms);
-				ronda++;
-				break;
-			
-			case 0:
-				finish = true;
-				break;
-			}
-			
-			
-		}
-		
-		*/
-		
 	}
 
 	private static void allCharacters() {
@@ -147,69 +113,6 @@ public class Main_pruebas {
 			
 		}
 		
-	}
-
-	@SuppressWarnings("unused")
-	private static void printGoals() {
-		
-		for(int i=0; characters[i]!=null; i++) {
-			
-			System.out.print(characters[i].getName());
-			System.out.println("");
-			if(characters[i].getGoal_location() != null) {
-				
-				System.out.print("Su objectivo es llegar a " + characters[i].getGoal_location().getName());
-
-			}
-			
-			if(characters[i].getGoal_object() != null) {
-				
-				System.out.print(" con " + characters[i].getGoal_object().getName());
-				
-			}
-			System.out.println("");
-
-		}
-		
-	}
-	
-	@SuppressWarnings("unused")
-	private static void printData(){
-		
-		dataTool.updateData(rooms,characters,objects);
-		rooms = dataTool.updateRooms(rooms);
-		
-		System.out.println("");
-
-		for(int i=0; rooms[i]!=null; i++) {
-			
-			System.out.print("Room: " + rooms[i].getName() + ", hay " + rooms[i].getGuestsNum() + " personas y "+ rooms[i].getObjectsNum() +" objetos, está pegado a ");
-			rooms[i].printNextTo();
-			System.out.println("");
-			
-		}
-		
-		System.out.println("");
-		
-		for(int i=0; characters[i]!=null; i++) {
-			
-			System.out.print("Character: " + characters[i].getName() + ". Situado en " + characters[i].getLocation().getName());
-			if(characters[i].getObject() != null) {System.out.print(" y tiene " + characters[i].getObject().getName());}
-			else {System.out.print(" y no tiene nada");}
-			System.out.println("");
-			
-		}
-		
-		System.out.println("");
-
-		for(int i=0; objects[i] != null; i++) {
-			
-			System.out.print("Object: " + objects[i].getName() + ". Situado en ");
-			objects[i].getPosition();
-			System.out.println("");
-			
-		}
-
 	}
 
 }
