@@ -1,7 +1,4 @@
-import java.awt.Color;
 import java.io.IOException;
-
-import javax.swing.JFrame;
 
 import data.*;
 import tools.*;
@@ -38,7 +35,8 @@ public class Main_pruebas_2 {
 ///////////////////////////////////////////////////////////////////////test zone
 
 		//pruebas();
-						
+		screen.updateImages(characters[0]);
+		
 ///////////////////////////////////////////////////////////////////////test zone
 		
 	}
@@ -62,6 +60,13 @@ public class Main_pruebas_2 {
 			dataTool.updateData(rooms,characters,objects);
 			rooms = dataTool.updateRooms(rooms);
 			ronda++;
+			screen.updateImages(characters[0]);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		
