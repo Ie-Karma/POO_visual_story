@@ -5,8 +5,8 @@ import data.*;
 public class actionsTools {
 		
 	private int podium = 1;
-	
-	public character randomAction(character character) {
+		
+	public character[] randomAction(character[] character, int key) {
 		
 		/*
 		options:
@@ -19,19 +19,21 @@ public class actionsTools {
 		drop object = 5
 		*/
 		
+		for(int i = 0; character[i] != null; i++) {
+
 		object obj;
 		int options[] = {0,1,0,1};
 		int optionsNum = 2;
 		int choice = (int)(Math.random()*4);
 				
-		obj = character.getObject();
+		obj = character[i].getObject();
 
-		if(character.completeGoal() == true) {
+		if(character[i].completeGoal() == true) {
 			
-			if(character.getMedal() == 0) {
+			if(character[i].getMedal() == 0) {
 				
-				System.out.println("Podium de " + character.getName());
-				character.setMedal(podium);
+				System.out.println("Podium de " + character[i].getName());
+				character[i].setMedal(podium);
 				podium++;
 				
 			}
@@ -42,21 +44,21 @@ public class actionsTools {
 			
 			if(obj == null) {
 				
-				character.setAsked(false);
-				character.setAsker(null);
+				character[i].setAsked(false);
+				character[i].setAsker(null);
 				
-				if(randomAsked(character,0) > 0) {
+				if(randomAsked(character[i],0) > 0) {
 					options[optionsNum] = 2;
 					optionsNum++;
 				}
-				if(character.getLocation().getObjectsNum() > 0) {
+				if(character[i].getLocation().getObjectsNum() > 0) {
 					options[optionsNum] = 4;
 					optionsNum++;
 				}
 				
 			}else {
 				
-				if(character.isAsked() == true) {
+				if(character[i].isAsked() == true) {
 					
 					options[optionsNum] = 3;
 					optionsNum++;
@@ -72,46 +74,49 @@ public class actionsTools {
 
 		}
 
-		System.out.print(character.getName() + " has chosen ");
+		if(i == 0) {choice = key;}
+		
+		System.out.print(character[i].getName() + " has chosen ");
 		
 		switch(choice) {
 		
 		case 0: 	
 			System.out.println("SKIP");	
-			character.skip();
+			character[i].skip();
 			break;
 			
 		case 1: 	
 			System.out.print("MOVE TO ");	
-			character.moveTo(randomRoom(character));
-			System.out.println(character.getLocation().getName());
+			character[i].moveTo(randomRoom(character[i]));
+			System.out.println(character[i].getLocation().getName());
 			break;
 			
 		case 2: 	
 			System.out.print("ASK TO ");	
-			randomAsked(character,1);
+			randomAsked(character[i],1);
 			break;
 			
 		case 3: 	
 			System.out.println("GIVE TO ");	
-			giveObject(character);
+			giveObject(character[i]);
 			break;
 			
 		case 4: 	
 			System.out.print("TAKE ");	
-			character.takeObject(character.getLocation().getObjects()[(int)(Math.random()*(character.getLocation().getObjectsNum()))]);
-			character.getObject().setLocation(null);
-			System.out.println(character.getObject().getName());
+			character[i].takeObject(character[i].getLocation().getObjects()[(int)(Math.random()*(character[i].getLocation().getObjectsNum()))]);
+			character[i].getObject().setLocation(null);
+			System.out.println(character[i].getObject().getName());
 			break;
 			
 		case 5: 	
 			System.out.print("DROP ");
-			System.out.println(character.getObject().getName());
-			character.dropObject();
+			System.out.println(character[i].getObject().getName());
+			character[i].dropObject();
 			break;
 
 		}
 		
+		}
 		return character;
 		
 	}

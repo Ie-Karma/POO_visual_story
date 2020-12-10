@@ -12,7 +12,6 @@ public class Main_pruebas_2 {
 	static object[] objects;
 	static actionsTools tool = new actionsTools();
 	static dataTools dataTool = new dataTools();
-	static Kimput imput = new Kimput();	
 	static screen screen = new screen();
 	
 	public static void main(String[] args) throws IOException {
@@ -35,8 +34,20 @@ public class Main_pruebas_2 {
 ///////////////////////////////////////////////////////////////////////test zone
 
 		//pruebas();
-		screen.updateImages(characters[0]);
 		
+		for(int i = 0; i<5; i++) {
+			while(screen.isOption() == false) {
+				characters = screen.updateImages(characters);
+			}
+		characters = tool.randomAction(characters,screen.getKey_p());
+		screen.setOption(false);
+
+		}
+
+		
+		
+		//characters = screen.updateImages(characters);
+
 ///////////////////////////////////////////////////////////////////////test zone
 		
 	}
@@ -56,17 +67,12 @@ public class Main_pruebas_2 {
 
 			System.out.println("");
 			
-			allCharacters();
+
 			dataTool.updateData(rooms,characters,objects);
 			rooms = dataTool.updateRooms(rooms);
 			ronda++;
-			screen.updateImages(characters[0]);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			characters = screen.updateImages(characters);
+
 			
 		}
 		
@@ -105,16 +111,6 @@ public class Main_pruebas_2 {
 		for(int i = 0; characters[i] != null; i++) {
 			
 			System.out.println(characters[i].getName() + " has finished " + podiumChars[i].getMedal());
-			
-		}
-		
-	}
-
-	private static void allCharacters() {
-		
-		for(int i = 0; characters[i] != null; i++) {
-			
-			characters[i] = tool.randomAction(characters[i]);
 			
 		}
 		
