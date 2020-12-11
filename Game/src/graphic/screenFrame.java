@@ -92,7 +92,10 @@ public class screenFrame extends JFrame implements KeyListener{
 		
 		case 0:	System.out.println("You have chosen to Skip this round");
 			updateData();
-			characters = tool.randomAction(characters,getKey());break;
+			characters = tool.randomAction(characters,getKey());
+			panel.setAnimation(0);
+			panel.setSelec(0);
+			break;
 			
 		case 1: 	
 			
@@ -111,9 +114,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			
 			if(characters[0].isAsked() && characters[0].getObject() != null) {
 				
-				giveObject();
-				updateData();
-				characters = tool.randomAction(characters,getKey());
+				panel.setAnimation(3);
 				
 			}
 			break;
@@ -134,8 +135,10 @@ public class screenFrame extends JFrame implements KeyListener{
 				characters[0].dropObject();
 				updateData();
 				characters = tool.randomAction(characters,getKey());
+				panel.setAnimation(0);
+				panel.setSelec(0);
 				
-			}
+			}break;
 			
 		case (-8):
 			panel.increaseSelec();
@@ -150,6 +153,24 @@ public class screenFrame extends JFrame implements KeyListener{
 			panel.setSelec(0);
 			break;
 				
+		case (35):
+			if(panel.getAnimation() == 3) {
+				
+				panel.setAnimation(0);
+				object obj = characters[0].getObject();
+				characters[0].setObject(null);
+				characters[0].getAsker().takeObject(obj);
+				
+				System.out.println(obj.getName() + " Entregado a " + obj.getOwner().getName());
+				
+				characters[0].setAsked(false);
+				characters[0].setAsker(null);
+				updateData();
+				characters = tool.randomAction(characters,getKey());
+
+			}
+			break;
+			
 		case (-38):
 		
 			System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
@@ -178,9 +199,11 @@ public class screenFrame extends JFrame implements KeyListener{
 			}
 			panel.setAnimation(0);
 			panel.setSelec(0);
+			
 			break;
+
 		}
-		
+
 		updateData();
 		panel.updateImages(characters);
 

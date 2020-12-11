@@ -80,6 +80,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		
 		case 1:roomList(g);break;
 		case 2:charactersList(g);break;
+		case 3:giveTo(g);break;
 		case 4:objectsList(g);break;
 		
 		
@@ -87,6 +88,33 @@ public class screenPanel extends JPanel implements ActionListener{
 				
 	}
 	
+	private void giveTo(Graphics g) {
+		
+		//shadow
+		g.setColor(new Color(84, 92, 82,255));
+		g.fillRoundRect(273, xm+113, 444, 215, 60, 60);
+		//list
+		g.setColor(new Color(244, 211, 94,255));
+		g.fillRoundRect(280, xm+120, 430, 200, 50, 50);
+		//Name
+		g.setColor(new Color(84, 92, 82,255));
+		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.drawString("Do you want to give ",380,xm+150);
+		g.drawString(characters[0].getObject().getName()
+		+ " to " + characters[0].getAsker().getName() + "?", 390, xm+170);
+		//yes no
+		g.setColor(new Color(255, 100, 123,255));
+		g.fillRoundRect(350, xm+220, 100, 70,30,30);
+		g.fillRoundRect(520, xm+220, 100, 70,30,30);
+		g.setColor(new Color(84, 92, 82,255));
+		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.drawString("YES",373,xm+250);
+		g.drawString("(S)",373,xm+280);
+		g.drawString("NO",553,xm+250);
+		g.drawString("(ESC)",527,xm+280);
+				
+	}
+
 	private void objectsList(Graphics g) {
 
 		max = 0;
@@ -99,7 +127,6 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.fillRoundRect(273, xm-7, 444, 473, 60, 60);
 		//list
 		g.setColor(new Color(244, 211, 94,255));
-		//g.fillRoundRect(280, 133, 430, 459, 50, 50);
 		g.fillRoundRect(280, xm, 430, 459, 50, 50);
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
