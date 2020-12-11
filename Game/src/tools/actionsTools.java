@@ -95,7 +95,7 @@ public class actionsTools {
 			break;
 			
 		case 3: 	
-			System.out.println("GIVE TO ");	
+			System.out.println("GIVE TO " + character[i].getAsker().getName());	
 			giveObject(character[i]);
 			break;
 			

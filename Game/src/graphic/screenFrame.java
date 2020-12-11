@@ -3,42 +3,49 @@ package graphic;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import tools.*;
 import data.character;
 import data.object;
+import data.room;
 
 public class screenFrame extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private actionsTools tool = new actionsTools();
+	private dataTools data = new dataTools();
 	private int key = -20;
+	private room[] rooms;
 	private character[] characters;
+	private object[] objects;
+	private screenPanel panel;
 	
-	public screenFrame(screenPanel panel) {
+	public screenFrame(screenPanel panel_0) throws IOException {
+		
+		TextRead inicio = new TextRead();
+		
+		rooms = inicio.getRooms_ini();
+		characters = inicio.getChars_ini();
+		objects = inicio.getObjects_ini();
+		characters = data.playerOnArray(characters);
+		
+		panel = panel_0;
 		
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
-		setResizable(true);
+		setResizable(false);
 		setSize(1000,750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(64,50,51,255));
+		panel.updateImages(characters);
 		add(panel);
 		
 		addKeyListener(this);
 
 		
-	}
-	
-	public character[] updateData(character[] characters_0) {
-		
-		characters = characters_0;
-		
-		//characters = tool.randomAction(characters,getKey());
-		
-		return characters;
 	}
 	
 	private void giveObject() {
@@ -55,54 +62,69 @@ public class screenFrame extends JFrame implements KeyListener{
 		
 	}
 	
+	private void updateData() {
+		
+		data.updateData(rooms, characters, objects);
+		data.updateRooms(rooms);
+		characters = data.getCharacters();
+		rooms = data.getRooms();
+		objects = data.getObjects();
+		panel.updateImages(characters);
+		
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 
 		setKey(e.getKeyCode()-48);
 		System.out.println(getKey());
 		
+		updateData();
+		
+		if(characters[0].isAsked() && characters[0].getAsker().getLocation().equals(characters[0].getLocation()) == false ) {
+			characters[0].setAsked(false);
+			characters[0].setAsker(null);
+		}
+		
+		panel.updateImages(characters);
+
 		switch(key) {
 		
 		case 0:	System.out.println("You have chosen to Skip this round");
-		
+			updateData();
 			characters = tool.randomAction(characters,getKey());break;
 			
-		case 1: System.out.print("You have moved from " + characters[0].getLocation().getName());
-		
-			characters[0].setLocation(characters[0].getLocation().getNextTo()[0]);
-			System.out.println(" to " + characters[0].getLocation().getName());
-
-			characters = tool.randomAction(characters,getKey());
+		case 1: 	
 			
-			
+			panel.setAnimation(1);					
 			break;
+			
 		case 2:
 			if(characters[0].getObject() == null && characters[0].getLocation().getGuestsNum() > 1) {
 				
-				//print lista characters to ask
-				characters = tool.randomAction(characters,getKey());
-				
+				panel.setAnimation(2);
+								
 			}
-
 			break;
+
 		case 3: 
 			
 			if(characters[0].isAsked() && characters[0].getObject() != null) {
 				
 				giveObject();
+				updateData();
 				characters = tool.randomAction(characters,getKey());
 				
 			}
 			break;
+			
 		case 4:
 			if(characters[0].getObject() == null && characters[0].getLocation().getObjectsNum() > 0) {
 				
-				//desplegar lista de objetos
-				
-				characters = tool.randomAction(characters,getKey());
+				panel.setAnimation(4);
 				
 			}
-		break;
+			break;
 		
 		case 5:	
 			if(characters[0].getObject() != null) {
@@ -110,13 +132,58 @@ public class screenFrame extends JFrame implements KeyListener{
 				System.out.println("You have droped " + characters[0].getObject().getName() + " in " + characters[0].getLocation().getName());
 				
 				characters[0].dropObject();
+				updateData();
 				characters = tool.randomAction(characters,getKey());
 				
 			}
 			
+		case (-8):
+			panel.increaseSelec();
+			break;
 		
+		case (-10):
+			panel.decreaseSelec();
+			break;
+			
+		case (-21):
+			panel.setAnimation(0);
+			panel.setSelec(0);
+			break;
+				
+		case (-38):
+		
+			System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
+			
+			switch(panel.getAnimation()){
+				
+			case 1:
+				characters[0].moveTo(characters[0].getLocation().getNextTo()[panel.getSelec()]);
+				updateData();
+				characters = tool.randomAction(characters,getKey());
+				break;
+				
+			case 2:
+				panel.getToAsk()[panel.getSelec()].setAsked(true);
+				panel.getToAsk()[panel.getSelec()].setAsker(characters[0]);
+				updateData();
+				characters = tool.randomAction(characters,getKey());
+				break;
+				
+			case 4:
+				characters[0].takeObject(characters[0].getLocation().getObjects()[panel.getSelec()]);
+				updateData();
+				characters = tool.randomAction(characters,getKey());
+				break;
+				
+			}
+			panel.setAnimation(0);
+			panel.setSelec(0);
+			break;
 		}
 		
+		updateData();
+		panel.updateImages(characters);
+
 	}
 
 	@Override

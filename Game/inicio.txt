@@ -6,10 +6,10 @@ Dormitorio(Comedor, Jardín)
 <Personajes>
 Jorge(Comedor)
 Player(Comedor)
-Esther(Dormitorio)
-María(Jardín)
+Esther(Comedor)
+María(Comedor)
 <Objetos>
 Llave(Cocina)
-Ordenador(Player)
+Ordenador(Cocina)
 Cartera(Jardín)
 Pan(Jorge)

@@ -1,5 +1,9 @@
 package data;
 
+import java.awt.Image;
+
+import tools.imgGenerator;
+
 public class character extends DataFather{
 	
 	private room location;
@@ -12,11 +16,14 @@ public class character extends DataFather{
 	private object goal_object;
 	
 	private boolean goal_obj = false;
-	
+	private Image img;
 	private int medal = 0;
+	
 		
 	public character(String name_set) {
 		
+		imgGenerator gen = new imgGenerator();
+		setImg(gen.img);
 		setName(name_set);
 		
 	}
@@ -129,6 +136,14 @@ public class character extends DataFather{
 
 	public void setMedal(int medal) {
 		this.medal = medal;
+	}
+
+	public Image getImg() {
+		return img;
+	}
+
+	public void setImg(Image img) {
+		this.img = img;
 	}
 
 

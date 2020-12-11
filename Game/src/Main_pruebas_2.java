@@ -8,9 +8,9 @@ import graphic.*;
 public class Main_pruebas_2 {
 
 	//creamos arrays de los 3 tipos de objectos que usaremos
-	static room[] rooms;
-	static character[] characters;
-	static object[] objects;
+	//static room[] rooms;
+	//static character[] characters;
+	//static object[] objects;
 	static actionsTools tool = new actionsTools();
 	static dataTools dataTool = new dataTools();
 	static screenFrame screen;
@@ -19,17 +19,17 @@ public class Main_pruebas_2 {
 	public static void main(String[] args) throws IOException {
 		
 		//iniciamos el TextRead de inicio
-		TextRead inicio = new TextRead();
+		//TextRead inicio = new TextRead();
 		
 		//con el txt leido igualamos los datos a los objectos creados
-		rooms = inicio.getRooms_ini();
-		characters = inicio.getChars_ini();
-		objects = inicio.getObjects_ini();
+		//rooms = inicio.getRooms_ini();
+		//characters = inicio.getChars_ini();
+		//objects = inicio.getObjects_ini();
 		
 		//buscamos la posición de player en el array de characters y le colocamos en la posición 0
 
 		screen = new screenFrame(screenPanel);
-		characters = dataTool.playerOnArray(characters);
+		//characters = dataTool.playerOnArray(characters);
 
 		//recorre todos los characters sumandole un guestsNum al room en el que estén
 		//de esta forma actualizo el numero de characters en cada room
@@ -50,16 +50,16 @@ public class Main_pruebas_2 {
 
 		*/
 		
-		screen.updateData(characters);
-		System.out.println(screen.getKey());
+		//screen.updateData(characters);
+		//System.out.println(screen.getKey());
 		//characters = tool.randomAction(characters,screen.getKey());
 		
-		characters = screenPanel.updateImages(characters);
+		//characters = screenPanel.updateImages(characters);
 
 ///////////////////////////////////////////////////////////////////////test zone
 		
 	}
-	
+	/*
 	@SuppressWarnings("unused")
 	private static void pruebas() {
 			
@@ -123,5 +123,5 @@ public class Main_pruebas_2 {
 		}
 		
 	}
-
+*/
 }
