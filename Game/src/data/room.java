@@ -1,5 +1,7 @@
 package data;
 
+import java.awt.Color;
+
 public class room extends DataFather{
 	
 	private int guestsNum = 0;
@@ -7,13 +9,21 @@ public class room extends DataFather{
 	
 	private int objectsNum = 0;
 	private object[] objects = new object[100];
-	
+	private Color color;
 	private room[] nextTo = new room[100];
 	
 	public room(String name_set){
 		
 		setName(name_set);
 		
+		int a,b,c;
+		
+		a = (int)(Math.random()*250);
+		b = (int)(Math.random()*250);
+		c = (int)(Math.random()*250);
+
+		setColor(new Color(a,b,c,255));
+				
 	}
 
 	public room[] getNextTo() {
@@ -81,6 +91,14 @@ public class room extends DataFather{
 
 	public void setObjectsNum(int onjectsNum) {
 		this.objectsNum = onjectsNum;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 }

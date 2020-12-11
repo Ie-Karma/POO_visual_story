@@ -46,11 +46,7 @@ public class character extends DataFather{
 		
 		location = newRoom;
 		
-	}
-	
-	public void askFor() {}
-	
-	public void giveTo() {}
+	}	
 	
 	public void takeObject(object newObject) {
 		

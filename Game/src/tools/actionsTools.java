@@ -19,7 +19,7 @@ public class actionsTools {
 		drop object = 5
 		*/
 		
-		for(int i = 0; character[i] != null; i++) {
+		for(int i = 1; character[i] != null; i++) {
 
 		object obj;
 		int options[] = {0,1,0,1};
@@ -73,8 +73,6 @@ public class actionsTools {
 			choice = options[choice];
 
 		}
-
-		if(i == 0) {choice = key;}
 		
 		System.out.print(character[i].getName() + " has chosen ");
 		

@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+
 import data.*;
 import tools.*;
 import graphic.*;
@@ -12,7 +13,8 @@ public class Main_pruebas_2 {
 	static object[] objects;
 	static actionsTools tool = new actionsTools();
 	static dataTools dataTool = new dataTools();
-	static screen screen = new screen();
+	static screenFrame screen;
+	static screenPanel screenPanel = new screenPanel();
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -25,8 +27,10 @@ public class Main_pruebas_2 {
 		objects = inicio.getObjects_ini();
 		
 		//buscamos la posición de player en el array de characters y le colocamos en la posición 0
+
+		screen = new screenFrame(screenPanel);
 		characters = dataTool.playerOnArray(characters);
-		
+
 		//recorre todos los characters sumandole un guestsNum al room en el que estén
 		//de esta forma actualizo el numero de characters en cada room
 		//updateGuests();
@@ -34,19 +38,23 @@ public class Main_pruebas_2 {
 ///////////////////////////////////////////////////////////////////////test zone
 
 		//pruebas();
-		
+		/*
 		for(int i = 0; i<5; i++) {
 			while(screen.isOption() == false) {
 				characters = screen.updateImages(characters);
 			}
-		characters = tool.randomAction(characters,screen.getKey_p());
+		characters = tool.randomAction(characters,screen.getKey());
 		screen.setOption(false);
 
 		}
 
+		*/
 		
+		screen.updateData(characters);
+		System.out.println(screen.getKey());
+		//characters = tool.randomAction(characters,screen.getKey());
 		
-		//characters = screen.updateImages(characters);
+		characters = screenPanel.updateImages(characters);
 
 ///////////////////////////////////////////////////////////////////////test zone
 		
@@ -71,7 +79,7 @@ public class Main_pruebas_2 {
 			dataTool.updateData(rooms,characters,objects);
 			rooms = dataTool.updateRooms(rooms);
 			ronda++;
-			characters = screen.updateImages(characters);
+			characters = screenPanel.updateImages(characters);
 
 			
 		}

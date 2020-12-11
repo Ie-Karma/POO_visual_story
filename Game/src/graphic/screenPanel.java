@@ -1,15 +1,16 @@
 package graphic;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import data.character;
 
-public class screen extends JFrame implements KeyListener{
+public class screenPanel extends JPanel implements ActionListener{
 		
+	@SuppressWarnings("unused")
 	private String url_pres = new String("imgs/pressed_buttons/");
 	private String url_all = new String("imgs/all_buttons/");
 	private String url_dis = new String("imgs/disabled_buttons/");
@@ -21,26 +22,16 @@ public class screen extends JFrame implements KeyListener{
 	private ImageIcon skip = new ImageIcon(url_all + "skip.png");
 	private ImageIcon take = new ImageIcon(url_dis + "take.png");
 	private ImageIcon top = new ImageIcon(url_all + "top.png");
-	
-	private int key_p = 0;
-	private boolean option = false;
-	
+	private ImageIcon player_img = new ImageIcon("imgs/Jugador.png");
+		
 	private character[] characters;
 	
 	private static final long serialVersionUID = 1L;
 
-	public screen() {
+	public screenPanel() {
 			
-		setTitle("Visual Story - By Mario Gallego Cano");
-		setVisible(true);
-		setResizable(false);
-		setSize(1000,700);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setBackground(new Color(64,50,51,255));
-				
-		addKeyListener(this);
-		
-		repaint();
+		Timer tm = new Timer(4,this);
+		tm.start();
 		
 	}
 	
@@ -48,9 +39,13 @@ public class screen extends JFrame implements KeyListener{
 				
 		super.paintComponents(g);
 								
-		g.setColor(new Color(241,154,62,255));
-		g.fillRoundRect(10,33, 980, 657, 50, 50);
+		g.setColor(new Color(84, 92, 82,255));
+		g.fillRect(0, 0, 1000, 800);
 		
+		g.setColor(characters[0].getLocation().getColor());
+		g.fillRoundRect(10,9, 965, 695, 50, 50);
+		
+		g.drawImage(player_img.getImage(), 395, 400, null);
 		g.drawImage(ask.getImage(), 0, 0, null);
 		g.drawImage(drop.getImage(), 0, 0, null);
 		g.drawImage(give.getImage(), 0, 0, null);
@@ -77,10 +72,7 @@ public class screen extends JFrame implements KeyListener{
 	}
 	
 	public character[] updateImages(character[] characters_0) {
-		
-		key_p = -20;
-		option = false;
-		
+				
 		characters = characters_0;
 				
 		ask = new ImageIcon(url_dis + "ask_to.png");
@@ -116,83 +108,14 @@ public class screen extends JFrame implements KeyListener{
 			}
 			
 		}
-		checker();
-		if(key_p >= 0 && key_p <= 5) {System.out.println("KEY");option = true;repaint();}
 		return characters;
 	}
-	
-	private void checker() {
-		
-		switch (key_p) {
-		
-		case 0: 	 	
-			skip = new ImageIcon(url_pres + "skip.png");break;
-		case 1: 	 	
-			move = new ImageIcon(url_pres + "move_to.png");break;
-		case 2: 	 	
-			if(characters[0].getObject() == null && characters[0].getLocation().getGuestsNum() > 1) {
-				ask = new ImageIcon(url_pres + "ask_to.png");
-				}else {key_p = -20;}
-			;break;
-		case 3: 	 	
-			if(characters[0].getObject() != null && characters[0].isAsked()) {
-				give = new ImageIcon(url_pres + "give.png");
-			}else {key_p = -20;}
-			;break;
-		case 4: 	 	
-			if(characters[0].getObject() == null && characters[0].getLocation().getObjectsNum() > 0) {
-				take = new ImageIcon(url_pres + "take.png");
-			}else {key_p = -20;}
-			;break;
-		case 5: 	 	
-			if(characters[0].getObject() != null) {
-				drop = new ImageIcon(url_pres + "drop.png");
-			}else {key_p = -20;}
-			;break;
-		
-		}
-		
-	}
-	
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		updateImages(characters);
-		key_p = e.getKeyCode();
-		key_p = key_p - 48;
-		System.out.println(key_p);
+	public void actionPerformed(ActionEvent e) {
 
 		repaint();
 		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean isOption() {
-		return option;
-	}
-
-	public void setOption(boolean option) {
-		this.option = option;
-	}
-
-	public int getKey_p() {
-		return key_p;
-	}
-
-	public void setKey_p(int key_p) {
-		this.key_p = key_p;
 	}
 	
 	
