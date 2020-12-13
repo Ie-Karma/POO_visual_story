@@ -17,7 +17,7 @@ public class character extends DataFather{
 	
 	private boolean goal_obj = false;
 	private Image img;
-	private int medal = 0;
+	private int medal = -1;
 	
 		
 	public character(String name_set) {
@@ -37,7 +37,13 @@ public class character extends DataFather{
 		}
 		
 		if(location == goal_location && (object == goal_object || goal_object == null)) {
-			//System.out.println(getName() + " has finished");
+
+			if( goal_object == null && object != null) {
+				
+				dropObject();
+				
+			}
+
 			return true;
 			}
 		

@@ -29,15 +29,19 @@ public class screenPanel extends JPanel implements ActionListener{
 	private int xm = 730;
 	private int selec = 0;
 	private int max = 0;
+	private int opacity = 255;
+	private double opacity_2 = 255;
+	private boolean endScene = false;
 	
 	private character[] toAsk;
 	private character[] characters;
+	private character[] winners;
 	
 	private static final long serialVersionUID = 1L;
 
 	public screenPanel() {
 			
-		Timer tm = new Timer(1,this);
+		Timer tm = new Timer(2,this);
 		tm.start();
 		
 	}
@@ -49,46 +53,100 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(84, 92, 82,255));
 		g.fillRect(0, 0, 1000, 800);
 		
-		g.setColor(characters[0].getLocation().getColor());
-		g.fillRoundRect(10,9, 965, 695, 50, 50);
-		
-		g.drawImage(player_img.getImage(), 395, 400, null);
-		g.drawImage(ask.getImage(), 0, 0, null);
-		g.drawImage(drop.getImage(), 0, 0, null);
-		g.drawImage(give.getImage(), 0, 0, null);
-		g.drawImage(move.getImage(), 0, 0, null);
-		g.drawImage(skip.getImage(), 0, 0, null);
-		g.drawImage(take.getImage(), 0, 0, null);
-		g.drawImage(top.getImage(), 0, 0, null);
+		if(endScene == false) {
+			
+			g.setColor(characters[0].getLocation().getColor());
+			g.fillRoundRect(10,9, 965, 695, 50, 50);
+			
+			g.drawImage(player_img.getImage(), 395, 400, null);
+			g.drawImage(ask.getImage(), 0, 0, null);
+			g.drawImage(drop.getImage(), 0, 0, null);
+			g.drawImage(give.getImage(), 0, 0, null);
+			g.drawImage(move.getImage(), 0, 0, null);
+			g.drawImage(skip.getImage(), 0, 0, null);
+			g.drawImage(take.getImage(), 0, 0, null);
+			g.drawImage(top.getImage(), 0, 0, null);
 
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
-		g.setColor(new Color(240,246,0,255));
-		g.drawString(characters[0].getLocation().getName(), 400, 100);
-		
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
-		if(characters[0].getObject() != null) {
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
+			g.setColor(new Color(240,246,0,255));
+			g.drawString(characters[0].getLocation().getName(), 400, 100);
 			
-			g.drawString(characters[0].getObject().getName(), 750, 97);
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			if(characters[0].getObject() != null) {
+				
+				g.drawString(characters[0].getObject().getName(), 750, 97);
+				
+			}else {
+				
+				g.drawString("NOTHING", 750, 97);
+				
+			}
 			
+			switch (getAnimation()) {
+			
+			case 1:roomList(g);break;
+			case 2:charactersList(g);break;
+			case 3:giveTo(g);break;
+			case 4:objectsList(g);break;
+			
+			}
+
 		}else {
 			
-			g.drawString("NOTHING", 750, 97);
+			//podiums
+			g.setColor(new Color(240, 246, 0,255));
+			g.fillRoundRect(410, 340, 165, 500, 20, 20);
+			g.fillRoundRect(190, 440, 165, 500, 20, 20);
+			g.fillRoundRect(640, 540, 165, 500, 20, 20);
 			
-		}
+			//pos
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,100) );
+			g.setColor(new Color(84, 92, 82,255));
+			g.drawString("1", 465, 450);
+			g.drawString("2", 245, 550);
+			g.drawString("3", 695, 650);
+
+			//names
+			g.setColor(new Color(240, 246, 0,255));
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			g.drawString(winners[0].getName(), 440, 100);
+			g.drawString(winners[1].getName(), 220, 200);
+			g.drawString(winners[2].getName(), 670, 300);
+			
+			//end scene imgs
+			g.drawImage(winners[0].getImg(), 370, 100, null);
+			g.drawImage(winners[1].getImg(), 150, 200, null);
+			g.drawImage(winners[2].getImg(), 600, 300, null);
+			
+			//end of the game
+			if((int)(opacity_2) > 0) {g.setColor(new Color(0,0,0,((int)(opacity_2))));}
+			else {g.setColor(new Color(0,0,0,0));}
+			g.fillRect(0, 0, 1000, 800);
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,150) );
+			if((int)(opacity_2) > 0) {g.setColor(new Color(84, 92, 82,((int)(opacity_2))));}
+			else {g.setColor(new Color(84, 92, 82,0));}
+			g.drawString("The game", 130, 300);
+			g.drawString("is over", 170, 450);
+			
+		}		
 		
-		switch (getAnimation()) {
+		//fade rect
+		g.setColor(new Color(84, 92, 82,opacity));
+		g.fillRect(0, 0, 1000, 800);
 		
-		case 1:roomList(g);break;
-		case 2:charactersList(g);break;
-		case 3:giveTo(g);break;
-		case 4:objectsList(g);break;
-		
-		
-		}
-				
 	}
 	
 	private void giveTo(Graphics g) {
+		
+		//character img cover
+		//shadow
+		g.setColor(new Color(84, 92, 82,255));
+		g.fillRoundRect(700, xm+72, 278, 290, 60, 60);
+		//list
+		g.setColor(new Color(244, 211, 94,255));
+		g.fillRoundRect(710, xm+80, 260, 275, 50, 50);
+
+		g.drawImage(characters[0].getAsker().getImg(), 720, xm+87, null);
 		
 		//shadow
 		g.setColor(new Color(84, 92, 82,255));
@@ -298,6 +356,16 @@ public class screenPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		
+		if(endScene) {
+			
+			opacity_2 = opacity_2 - 0.1;
+			
+		}
+		if((int)(opacity_2) == -250) {System.exit(0);}
+		
+		if(opacity > 0) {opacity--;}
+		
 		if(getAnimation() != 0 && xm >133) {
 			
 			xm--;
@@ -353,6 +421,26 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	public void setToAsk(character[] toAsk) {
 		this.toAsk = toAsk;
+	}
+	
+	public void resetOpacity() {
+		
+		opacity = 255;
+		
+	}
+
+	public boolean isEndScene() {
+		return endScene;
+	}
+
+	public void setEndScene(boolean endScene) {
+		this.endScene = endScene;
+	}
+	
+	public void setWinners(character[] winners_0) {
+		
+		winners = winners_0;
+		
 	}
 	
 }

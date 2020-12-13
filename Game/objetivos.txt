@@ -1,10 +1,10 @@
 <Localización Personajes>
 Player(Cocina)
 Jorge(Jardín)
-Esther(Comedor)
+Guillermo(Comedor)
 María(Comedor)
 <Posesión Objetos>
-Llave(Esther)
+Llave(Guillermo)
 Ordenador
 Cartera(Jorge)
 Pan(María)

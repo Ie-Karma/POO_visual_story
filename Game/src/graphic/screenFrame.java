@@ -23,16 +23,14 @@ public class screenFrame extends JFrame implements KeyListener{
 	private object[] objects;
 	private screenPanel panel;
 	
-	public screenFrame(screenPanel panel_0) throws IOException {
-		
-		TextRead inicio = new TextRead();
-		
-		rooms = inicio.getRooms_ini();
-		characters = inicio.getChars_ini();
-		objects = inicio.getObjects_ini();
+	public screenFrame(room[] rooms_0,character[] characters_0, object[] objects_0) throws IOException {
+				
+		rooms = rooms_0;
+		characters = characters_0;
+		objects = objects_0;
 		characters = data.playerOnArray(characters);
 		
-		panel = panel_0;
+		panel = new screenPanel();
 		
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
@@ -52,6 +50,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		
 		
 		object obj = characters[0].getObject();
+		obj.setLocation(null);
 		characters[0].setObject(null);
 		characters[0].getAsker().takeObject(obj);
 			
@@ -73,11 +72,60 @@ public class screenFrame extends JFrame implements KeyListener{
 		
 	}
 	
+	private void finish() {
+		
+		int round = 0;
+		
+		characters[0].setMedal(tool.getPodium());
+		tool.setPodium((tool.getPodium()+1));
+				
+		while(data.endGame(characters) == false) {
+						
+			updateData();
+			characters = tool.randomAction(characters,getKey());
+			round++;
+			
+		}
+
+		for(int i = 0; characters[i] != null; i++) {
+			
+			if(characters[i].getMedal() == -1) {characters[i].setMedal(tool.getPodium());
+			tool.setPodium((tool.getPodium()+1));
+			}
+			
+		}
+		
+		System.out.println("");
+		System.out.println(round + " rounds after...");
+		System.out.println("");
+		
+		System.out.println("- TOP 3 WINNERS -");
+				
+		character[] winners = new character[3];
+								
+			for(int i = 0; characters[i] != null; i++) {
+			
+				
+				switch (characters[i].getMedal()) {
+				
+				case 0 : winners[0] = characters[i];break;
+				case 1 : winners[1] = characters[i];break;
+				case 2 : winners[2] = characters[i];break;
+
+				}
+			
+			}
+		
+		updateData();panel.setWinners(winners);panel.setEndScene(true);panel.resetOpacity();
+
+		
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 
 		setKey(e.getKeyCode()-48);
-		System.out.println(getKey());
+		//System.out.println(getKey());
 		
 		updateData();
 		
@@ -90,11 +138,12 @@ public class screenFrame extends JFrame implements KeyListener{
 
 		switch(key) {
 		
-		case 0:	System.out.println("You have chosen to Skip this round");
+		case 0:	//System.out.println("You have chosen to Skip this round");
 			updateData();
 			characters = tool.randomAction(characters,getKey());
 			panel.setAnimation(0);
 			panel.setSelec(0);
+			panel.resetOpacity();
 			break;
 			
 		case 1: 	
@@ -130,13 +179,14 @@ public class screenFrame extends JFrame implements KeyListener{
 		case 5:	
 			if(characters[0].getObject() != null) {
 				
-				System.out.println("You have droped " + characters[0].getObject().getName() + " in " + characters[0].getLocation().getName());
+				//System.out.println("You have droped " + characters[0].getObject().getName() + " in " + characters[0].getLocation().getName());
 				
 				characters[0].dropObject();
 				updateData();
 				characters = tool.randomAction(characters,getKey());
 				panel.setAnimation(0);
 				panel.setSelec(0);
+				panel.resetOpacity();
 				
 			}break;
 			
@@ -157,14 +207,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			if(panel.getAnimation() == 3) {
 				
 				panel.setAnimation(0);
-				object obj = characters[0].getObject();
-				characters[0].setObject(null);
-				characters[0].getAsker().takeObject(obj);
-				
-				System.out.println(obj.getName() + " Entregado a " + obj.getOwner().getName());
-				
-				characters[0].setAsked(false);
-				characters[0].setAsker(null);
+				giveObject();				
 				updateData();
 				characters = tool.randomAction(characters,getKey());
 
@@ -173,7 +216,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			
 		case (-38):
 		
-			System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
+			//System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
 			
 			switch(panel.getAnimation()){
 				
@@ -181,6 +224,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				characters[0].moveTo(characters[0].getLocation().getNextTo()[panel.getSelec()]);
 				updateData();
 				characters = tool.randomAction(characters,getKey());
+				if(characters[0].completeGoal()) {finish();}
 				break;
 				
 			case 2:
@@ -199,7 +243,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			}
 			panel.setAnimation(0);
 			panel.setSelec(0);
-			
+			panel.resetOpacity();
 			break;
 
 		}

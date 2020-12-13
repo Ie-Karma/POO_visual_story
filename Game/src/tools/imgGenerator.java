@@ -51,7 +51,7 @@ public class imgGenerator {
 			String String64 = Base64.getEncoder().encodeToString(url.getBytes());
 			 
 			url_gen = "http://www.avatarsinpixels.com/chibi/" + String64 + "/10/show.png";
-			 			
+			 		
 			return url_gen;
 			
 	}
