@@ -33,6 +33,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		rooms = rooms_0;
 		characters = characters_0;
 		objects = objects_0;
+		
 		characters = data.playerOnArray(characters);
 		
 		panel = new screenPanel();
@@ -141,7 +142,6 @@ public class screenFrame extends JFrame implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 
 		setKey(e.getKeyCode()-48);
-		//System.out.println(getKey());
 		
 		updateData();
 		
@@ -231,7 +231,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			break;
 			
 		case (-38):
-		
+			
 			//System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
 			
 			switch(panel.getAnimation()){
