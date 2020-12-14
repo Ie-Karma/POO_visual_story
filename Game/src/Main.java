@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		@SuppressWarnings("unused")
-		intro intro = new intro();		
+		intro intro = new intro();	
 
 	}
 	

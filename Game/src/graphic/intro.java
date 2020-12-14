@@ -1,8 +1,11 @@
 package graphic;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -29,8 +32,10 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private object[] objects;
 	private dataTools data = new dataTools();
 	private int state = 0;
-
+	
 	public intro() throws IOException {
+		
+		setUndecorated(true);
 		
 		TextRead text = new TextRead();
 		
@@ -43,6 +48,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		setVisible(true);
 		setResizable(false);
 		setSize(1000,750);
+		centerFrame();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(64,50,51,255));
 				
@@ -52,6 +58,16 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		tm.start();
 		
 	}
+	
+	   private void centerFrame() {
+
+           Dimension windowSize = getSize();
+           GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+           Point centerPoint = ge.getCenterPoint();
+
+           int dx = centerPoint.x - windowSize.width / 2;
+           setLocation(dx, 0);
+   }
 	
 	public void paint (Graphics g) {
 		
