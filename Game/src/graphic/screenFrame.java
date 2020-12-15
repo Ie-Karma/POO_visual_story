@@ -22,6 +22,7 @@ public class screenFrame extends JFrame implements KeyListener{
 	private character[] characters;
 	private object[] objects;
 	private screenPanel panel;
+	private boolean end = false;
 	
 	public screenFrame(room[] rooms_0,character[] characters_0, object[] objects_0) throws IOException {
 				
@@ -116,9 +117,13 @@ public class screenFrame extends JFrame implements KeyListener{
 			
 			}
 		
-		updateData();panel.setWinners(winners);panel.setEndScene(true);panel.resetOpacity();
+		updateData();
+		panel.setWinners(winners);
+		panel.setEndScene(true);
+		panel.resetOpacity();
+		panel.setAnimation(10);
+		end = true;
 
-		
 	}
 	
 	@Override
@@ -271,6 +276,14 @@ public class screenFrame extends JFrame implements KeyListener{
 
 	public void setKey(int key) {
 		this.key = key;
+	}
+
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
 	}
 	
 }

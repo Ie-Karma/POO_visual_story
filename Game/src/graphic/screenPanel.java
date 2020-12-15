@@ -95,28 +95,28 @@ public class screenPanel extends JPanel implements ActionListener{
 			
 			//podiums
 			g.setColor(new Color(240, 246, 0,255));
-			g.fillRoundRect(410, 340, 165, 500, 20, 20);
-			g.fillRoundRect(190, 440, 165, 500, 20, 20);
-			g.fillRoundRect(640, 540, 165, 500, 20, 20);
+			g.fillRoundRect(410, xm-390, 165, 1000, 20, 20);
+			g.fillRoundRect(190, xm-290, 165, 1000, 20, 20);
+			g.fillRoundRect(640, xm-190, 165, 1000, 20, 20);
 			
 			//pos
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,100) );
 			g.setColor(new Color(84, 92, 82,255));
-			g.drawString("1", 465, 450);
-			g.drawString("2", 245, 550);
-			g.drawString("3", 695, 650);
+			g.drawString("1", 465, xm-280);
+			g.drawString("2", 245, xm-180);
+			g.drawString("3", 695, xm-80);
 
 			//names
 			g.setColor(new Color(240, 246, 0,255));
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
-			g.drawString(winners[0].getName(), 440, 100);
-			g.drawString(winners[1].getName(), 220, 200);
-			g.drawString(winners[2].getName(), 670, 300);
+			g.drawString(winners[0].getName(), 440, xm-630);
+			g.drawString(winners[1].getName(), 220, xm-530);
+			g.drawString(winners[2].getName(), 670, xm-430);
 			
 			//end scene imgs
-			g.drawImage(winners[0].getImg(), 370, 100, null);
-			g.drawImage(winners[1].getImg(), 150, 200, null);
-			g.drawImage(winners[2].getImg(), 600, 300, null);
+			g.drawImage(winners[0].getImg(), 370, xm-630, null);
+			g.drawImage(winners[1].getImg(), 150, xm-530, null);
+			g.drawImage(winners[2].getImg(), 600, xm-430, null);
 			
 			//end of the game
 			if((int)(opacity_2) > 0) {g.setColor(new Color(0,0,0,((int)(opacity_2))));}
@@ -350,7 +350,9 @@ public class screenPanel extends JPanel implements ActionListener{
 			}
 			
 		}
+		
 		return characters;
+		
 	}
 
 	@Override
@@ -359,18 +361,18 @@ public class screenPanel extends JPanel implements ActionListener{
 		
 		if(endScene) {
 			
-			opacity_2 = opacity_2 - 0.1;
+			opacity_2 = opacity_2 - 0.5;
 			
 		}
-		if((int)(opacity_2) == -250) {System.exit(0);}
 		
 		if(opacity > 0) {opacity--;}
-		
-		if(getAnimation() != 0 && xm >133) {
+				
+		if(getAnimation() != 0 && xm > 133) {
 			
 			xm--;
 			
 		}
+		
 		if(getAnimation() == 0 && xm < 730) {
 			
 			xm++;

@@ -118,7 +118,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		g.drawString("PRESS INTRO", 360, 705);
 		
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 				
@@ -129,7 +129,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		case 10: 
 			if(state == 1) {
 			try {
-				frame = new screenFrame(rooms,characters,objects);
+				frame = new screenFrame(rooms,characters,objects);				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
