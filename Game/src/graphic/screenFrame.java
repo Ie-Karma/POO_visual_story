@@ -1,6 +1,9 @@
 package graphic;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -25,18 +28,22 @@ public class screenFrame extends JFrame implements KeyListener{
 	
 	public screenFrame(room[] rooms_0,character[] characters_0, object[] objects_0) throws IOException {
 				
+		setUndecorated(true);
+		
 		rooms = rooms_0;
 		characters = characters_0;
 		objects = objects_0;
 		characters = data.playerOnArray(characters);
+		characters[0].setBeliefs(characters,objects);
 		
 		panel = new screenPanel();
 		
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
 		setResizable(false);
-		setSize(1000,750);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(985,715);
+		centerFrame();
+		setDefaultCloseOperation(3);
 		getContentPane().setBackground(new Color(64,50,51,255));
 		panel.updateImages(characters);
 		add(panel);
@@ -45,6 +52,16 @@ public class screenFrame extends JFrame implements KeyListener{
 
 		
 	}
+	
+	   private void centerFrame() {
+
+           Dimension windowSize = getSize();
+           GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+           Point centerPoint = ge.getCenterPoint();
+
+           int dx = centerPoint.x - windowSize.width / 2;
+           setLocation(dx, 0);
+   }
 	
 	private void giveObject() {
 		
@@ -138,7 +155,7 @@ public class screenFrame extends JFrame implements KeyListener{
 
 		switch(key) {
 		
-		case 0:	//System.out.println("You have chosen to Skip this round");
+		case 0:
 			updateData();
 			characters = tool.randomAction(characters,getKey());
 			panel.setAnimation(0);
@@ -189,6 +206,10 @@ public class screenFrame extends JFrame implements KeyListener{
 				panel.resetOpacity();
 				
 			}break;
+		
+		case 6:
+			panel.setAnimation(6);
+			break;
 			
 		case (-8):
 			panel.increaseSelec();
@@ -199,6 +220,12 @@ public class screenFrame extends JFrame implements KeyListener{
 			break;
 			
 		case (-21):
+			panel.increaseOffPacity();
+			if(panel.getOffPacity() == 255) {
+				
+				System.exit(0);
+				
+			}
 			panel.setAnimation(0);
 			panel.setSelec(0);
 			break;
@@ -254,8 +281,9 @@ public class screenFrame extends JFrame implements KeyListener{
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent e) {
+		
+		panel.decreaseOffPacity();
 		
 	}
 

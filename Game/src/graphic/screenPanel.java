@@ -32,6 +32,7 @@ public class screenPanel extends JPanel implements ActionListener{
 	private int opacity = 255;
 	private double opacity_2 = 255;
 	private boolean endScene = false;
+	private int offPacity = 0;
 	
 	private character[] toAsk;
 	private character[] characters;
@@ -88,6 +89,7 @@ public class screenPanel extends JPanel implements ActionListener{
 			case 2:charactersList(g);break;
 			case 3:giveTo(g);break;
 			case 4:objectsList(g);break;
+			case 6:beliefsList(g);break;
 			
 			}
 
@@ -134,8 +136,57 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(84, 92, 82,opacity));
 		g.fillRect(0, 0, 1000, 800);
 		
+		//off rect
+		g.setColor(new Color(84, 92, 82,offPacity));
+		g.fillRect(0, 0, 1000, 800);
+		
+		//good bye
+		g.setColor(new Color(255,255,255,offPacity));
+		g.setFont(new Font("vcr osd mono", Font.PLAIN,150) );
+		g.drawString("GOOD BYE", 150, 350);
 	}
 	
+	private void beliefsList(Graphics g) {
+		
+		//shadow
+		g.setColor(new Color(84, 92, 82,255));
+		g.fillRoundRect(93, xm-7, 814, 473, 60, 60);
+		
+		//list
+		g.setColor(new Color(244, 211, 94,255));
+		g.fillRoundRect(100, xm, 800, 459, 50, 50);
+		
+		//line
+		g.setColor(new Color(84, 92, 82,255));
+		g.fillRoundRect(480, xm-5, 15, 470, 1, 1);
+		
+		//type
+		g.setColor(new Color(84, 92, 82,255));
+
+		g.drawString("-CHARACTERS-", 180, xm+50);
+		g.drawString("-OBJECTS-", 620, xm+50);
+		
+		//beliefs	
+		for(int i = selec+1; characters[0].getCharBeliefs()[i] != null && i<6; i++) {
+			
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+			g.drawString(characters[0].getCharBeliefs()[i].getName() + " was in "+characters[0].getCharBeliefs()[i].getLocation().getName(), 150, (xm+90) + (i-selec-1)*70);
+			
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			
+		}
+		
+		for(int i = selec; characters[0].getObjBeliefs()[i] != null && i<6; i++) {
+			
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getLocation().getName(), 550, (xm+90) + (i-selec)*70);
+			
+			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			
+		}
+		
+	}
+
 	private void giveTo(Graphics g) {
 		
 		//character img cover
@@ -402,17 +453,19 @@ public class screenPanel extends JPanel implements ActionListener{
 	}
 	
 	public void increaseSelec() {
-		if(selec < max-1) {
+		if(selec < max-1 && animation != 6) {
 		selec++;
 		}
+		
+		if(animation == 6) {selec++;}
 		
 	}
 	
 	public void decreaseSelec() {
-		if(selec > 0) {
+		if(selec > 0 ) {
 		selec--;
 		}
-		
+
 	}
 
 	public character[] getToAsk() {
@@ -441,6 +494,20 @@ public class screenPanel extends JPanel implements ActionListener{
 		
 		winners = winners_0;
 		
+	}
+
+	public int getOffPacity() {
+		
+		return offPacity;
+		
+	}
+	
+	public void decreaseOffPacity() {
+		offPacity = 0;
+	}
+
+	public void increaseOffPacity() {
+		offPacity+=5;
 	}
 	
 }

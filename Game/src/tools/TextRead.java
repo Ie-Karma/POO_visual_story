@@ -15,6 +15,7 @@ public class TextRead {
 	private object[] objects_ini = new object[100];
 	private int room_num = 0;
 	private int char_num = 0;
+	private int obj_num = 0;
 
 	@SuppressWarnings("resource")
 	public TextRead() throws IOException {
@@ -120,7 +121,7 @@ public class TextRead {
 		
 		while(cont < todo.length() && todo.charAt(cont) != '<') {
 			
-			while(todo.charAt(cont) != '(' ) {
+			while(todo.charAt(cont) != '(' && todo.charAt(cont) != '\n') {
 				
 				name = name + todo.charAt(cont);
 				cont++;
@@ -180,10 +181,8 @@ public class TextRead {
 			
 			while(todo.charAt(cont) != '(') {
 				
-				goal = goal + todo.charAt(cont);
-				
-				if(todo.charAt(cont)=='\n'){name = "";goal = "";}
-				
+				if(todo.charAt(cont)=='\n'){name = "";goal = "";}else {goal = goal + todo.charAt(cont);}
+								
 				cont++;
 				
 			}
@@ -194,6 +193,7 @@ public class TextRead {
 					
 					name = name + todo.charAt(cont);
 					cont++;
+					
 				}
 				
 			}
@@ -208,8 +208,8 @@ public class TextRead {
 				
 			}
 			
-			for(int i = 0; i<room_num;i++) {
-				
+			for(int i = 0; i<obj_num;i++) {
+								
 				if(getObjects_ini()[i].getName().equals(goal)) {
 					
 					obj_cont = i;
@@ -219,7 +219,7 @@ public class TextRead {
 			}
 			
 			getChars_ini()[char_cont].setGoal_object(getObjects_ini()[obj_cont]);
-			
+						
 			name = "";
 			goal = "";
 			cont++;
@@ -367,7 +367,6 @@ public class TextRead {
 		String todo = getInicio();
 		String name = "";
 		int cont = cont_0;
-		int obj_num = 0;
 		int loc_num = 0;
 		String loc = "";
 		

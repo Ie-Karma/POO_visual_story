@@ -3,8 +3,9 @@ Player(Cocina)
 Jorge(Jardín)
 Guillermo(Comedor)
 María(Comedor)
+Marcos(Comedor)
 <Posesión Objetos>
 Llave(Guillermo)
 Ordenador
 Cartera(Jorge)
-Pan(María)
+Movil(Player)

@@ -19,6 +19,8 @@ public class character extends DataFather{
 	private Image img;
 	private int medal = -1;
 	
+	private character[] CharBeliefs = new character[100];
+	private object[] ObjBeliefs = new object[100];
 		
 	public character(String name_set) {
 		
@@ -152,5 +154,57 @@ public class character extends DataFather{
 		this.img = img;
 	}
 
+	public void setBeliefs(character[] characters,object[] objects) {
+				
+		room unknown = new room("unknown");
+		
+		for(int i = 0; characters[i] != null; i++) {
+			
+			CharBeliefs[i] = new character(characters[i].getName());
+			
+			if(characters[i].getLocation().equals(location)) {
+				
+				CharBeliefs[i].setLocation(location);
+				
+			}else {CharBeliefs[i].setLocation(unknown);}
+			
+		}
+		
+		for(int i = 0; objects[i] != null; i++) {
+			
+			ObjBeliefs[i] = new object(objects[i].getName());
+			if(objects[i].getLocation() != null) {
+				
+				if(objects[i].getLocation().equals(location)) {
+					
+					ObjBeliefs[i].setLocation(characters[i].getLocation());
+					
+				}else {ObjBeliefs[i].setLocation(unknown);}
+				
+			}else {ObjBeliefs[i].setLocation(unknown);}
+			
+		}
+		
+	}
+	
+	public character[] getCharBeliefs() {
+		
+		return CharBeliefs;
+		
+	}
+	
+	public void setCharBeliefs(character[] chars) {
+		
+		CharBeliefs = chars;
+		
+	}
+
+	public object[] getObjBeliefs() {
+		return ObjBeliefs;
+	}
+
+	public void setObjBeliefs(object[] objBeliefs) {
+		ObjBeliefs = objBeliefs;
+	}
 
 }

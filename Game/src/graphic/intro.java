@@ -1,8 +1,11 @@
 package graphic;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -32,6 +35,8 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 
 	public intro() throws IOException {
 		
+		setUndecorated(true);
+		
 		TextRead text = new TextRead();
 		
 		rooms = text.getRooms_ini();
@@ -42,8 +47,9 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
 		setResizable(false);
-		setSize(1000,750);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(985,715);
+		centerFrame();
+		setDefaultCloseOperation(3);
 		getContentPane().setBackground(new Color(64,50,51,255));
 				
 		addKeyListener(this);
@@ -52,6 +58,16 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		tm.start();
 		
 	}
+	
+	   private void centerFrame() {
+
+           Dimension windowSize = getSize();
+           GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+           Point centerPoint = ge.getCenterPoint();
+
+           int dx = centerPoint.x - windowSize.width / 2;
+           setLocation(dx, 0);
+   }
 	
 	public void paint (Graphics g) {
 		
@@ -73,18 +89,18 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private void title(Graphics g) {
 		
 		g.setColor(new Color(244, 211, 94,255));
-		g.fillRoundRect(100, 150, 800, 100, 20, 20);
+		g.fillRoundRect(100, 100, 800, 100, 20, 20);
 	
 		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
 		g.setColor(new Color(84, 92, 82,255));
-		g.drawString("Wellcome to U-TAD Visual Story", 150, 210);
+		g.drawString("Wellcome to U-TAD Visual Story", 150, 160);
 	
 		g.setColor(new Color(244, 211, 94,255));
-		g.fillRoundRect(355, 550, 270, 50, 20, 20);
+		g.fillRoundRect(355, 500, 270, 50, 20, 20);
 	
 		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
 		g.setColor(new Color(84, 92, 82,255));
-		g.drawString("By Mario Gallego Cano", 370, 580);
+		g.drawString("By Mario Gallego Cano", 370, 530);
 		
 	}
 	
@@ -112,10 +128,10 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private void pressIntro(Graphics g) {
 		
 		g.setColor(new Color(255, 50, 50,255));
-		g.fillRoundRect(330, 650, 320, 80, 20, 20);
+		g.fillRoundRect(330, 600, 320, 80, 20, 20);
 		g.setColor(new Color(244, 211, 94,255));
 		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
-		g.drawString("PRESS INTRO", 360, 705);
+		g.drawString("PRESS INTRO", 360, 655);
 		
 	}
 
