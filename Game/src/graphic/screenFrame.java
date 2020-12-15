@@ -1,6 +1,9 @@
 package graphic;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -25,9 +28,12 @@ public class screenFrame extends JFrame implements KeyListener{
 	
 	public screenFrame(room[] rooms_0,character[] characters_0, object[] objects_0) throws IOException {
 				
+		setUndecorated(true);
+		
 		rooms = rooms_0;
 		characters = characters_0;
 		objects = objects_0;
+		
 		characters = data.playerOnArray(characters);
 		
 		panel = new screenPanel();
@@ -36,6 +42,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		setVisible(true);
 		setResizable(false);
 		setSize(1000,750);
+		centerFrame();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(64,50,51,255));
 		panel.updateImages(characters);
@@ -45,6 +52,16 @@ public class screenFrame extends JFrame implements KeyListener{
 
 		
 	}
+	
+	   private void centerFrame() {
+
+           Dimension windowSize = getSize();
+           GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+           Point centerPoint = ge.getCenterPoint();
+
+           int dx = centerPoint.x - windowSize.width / 2;
+           setLocation(dx, 0);
+   }
 	
 	private void giveObject() {
 		
@@ -125,7 +142,6 @@ public class screenFrame extends JFrame implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 
 		setKey(e.getKeyCode()-48);
-		//System.out.println(getKey());
 		
 		updateData();
 		
@@ -215,7 +231,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			break;
 			
 		case (-38):
-		
+			
 			//System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
 			
 			switch(panel.getAnimation()){
