@@ -154,6 +154,34 @@ public class character extends DataFather{
 		this.img = img;
 	}
 
+	public void updateBeliefs(character[] characters,object[] objects) {
+				
+		for(int i = 0; CharBeliefs[i] != null; i++) {
+						
+			if(characters[i].getLocation().equals(location)) {
+				
+				CharBeliefs[i].setLocation(location);
+				
+			}
+			
+		}
+		
+		for(int i = 0; ObjBeliefs[i] != null; i++) {
+			
+			if(objects[i].getLocation() != null) {
+				
+				if(objects[i].getLocation().equals(location)) {
+					
+					ObjBeliefs[i].setLocation(characters[i].getLocation());
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
 	public void setBeliefs(character[] characters,object[] objects) {
 				
 		room unknown = new room("unknown");

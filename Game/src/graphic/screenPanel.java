@@ -58,28 +58,29 @@ public class screenPanel extends JPanel implements ActionListener{
 			
 			g.setColor(characters[0].getLocation().getColor());
 			g.fillRoundRect(10,9, 965, 695, 50, 50);
-			
-			g.drawImage(player_img.getImage(), 395, 400, null);
-			g.drawImage(ask.getImage(), 0, 0, null);
-			g.drawImage(drop.getImage(), 0, 0, null);
-			g.drawImage(give.getImage(), 0, 0, null);
-			g.drawImage(move.getImage(), 0, 0, null);
-			g.drawImage(skip.getImage(), 0, 0, null);
-			g.drawImage(take.getImage(), 0, 0, null);
-			g.drawImage(top.getImage(), 0, 0, null);
+									
+			g.drawImage(player_img.getImage(), 395, opacity + 405 + offPacity, null);
+			g.drawImage(ask.getImage(), opacity*3, 0, null);
+			g.drawImage(drop.getImage(), opacity*3, opacity*3, null);
+			g.drawImage(give.getImage(), opacity*(-1)*3, opacity*3, null);
+			g.drawImage(move.getImage(), opacity*(-1)*3, 0, null);
+			g.drawImage(skip.getImage(), opacity*3, opacity, null);
+			g.drawImage(take.getImage(), opacity*(-1)*3, opacity*3, null);
+			g.drawImage(top.getImage(), 0, opacity*(-3), null);
 
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
 			g.setColor(new Color(240,246,0,255));
-			g.drawString(characters[0].getLocation().getName(), 400, 100);
+			g.drawString(characters[0].getLocation().getName(), 400, 100 + opacity*(-3));
 			
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			
 			if(characters[0].getObject() != null) {
 				
-				g.drawString(characters[0].getObject().getName(), 750, 97);
+				g.drawString(characters[0].getObject().getName(), 750, 97 + opacity*(-3));
 				
 			}else {
 				
-				g.drawString("NOTHING", 750, 97);
+				g.drawString("NOTHING", 750, 97 + opacity*(-3));
 				
 			}
 			
@@ -97,28 +98,28 @@ public class screenPanel extends JPanel implements ActionListener{
 			
 			//podiums
 			g.setColor(new Color(240, 246, 0,255));
-			g.fillRoundRect(410, 340, 165, 500, 20, 20);
-			g.fillRoundRect(190, 440, 165, 500, 20, 20);
-			g.fillRoundRect(640, 540, 165, 500, 20, 20);
+			g.fillRoundRect(410, xm-390, 165, 1000, 20, 20);
+			g.fillRoundRect(190, xm-290, 165, 1000, 20, 20);
+			g.fillRoundRect(640, xm-190, 165, 1000, 20, 20);
 			
 			//pos
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,100) );
 			g.setColor(new Color(84, 92, 82,255));
-			g.drawString("1", 465, 450);
-			g.drawString("2", 245, 550);
-			g.drawString("3", 695, 650);
+			g.drawString("1", 465, xm-280);
+			g.drawString("2", 245, xm-180);
+			g.drawString("3", 695, xm-80);
 
 			//names
 			g.setColor(new Color(240, 246, 0,255));
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
-			g.drawString(winners[0].getName(), 440, 100);
-			g.drawString(winners[1].getName(), 220, 200);
-			g.drawString(winners[2].getName(), 670, 300);
+			g.drawString(winners[0].getName(), 440, xm-630);
+			g.drawString(winners[1].getName(), 220, xm-530);
+			g.drawString(winners[2].getName(), 670, xm-430);
 			
 			//end scene imgs
-			g.drawImage(winners[0].getImg(), 370, 100, null);
-			g.drawImage(winners[1].getImg(), 150, 200, null);
-			g.drawImage(winners[2].getImg(), 600, 300, null);
+			g.drawImage(winners[0].getImg(), 370, xm-630, null);
+			g.drawImage(winners[1].getImg(), 150, xm-530, null);
+			g.drawImage(winners[2].getImg(), 600, xm-430, null);
 			
 			//end of the game
 			if((int)(opacity_2) > 0) {g.setColor(new Color(0,0,0,((int)(opacity_2))));}

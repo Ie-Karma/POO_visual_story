@@ -193,9 +193,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		
 		case 5:	
 			if(characters[0].getObject() != null) {
-				
-				//System.out.println("You have droped " + characters[0].getObject().getName() + " in " + characters[0].getLocation().getName());
-				
+								
 				characters[0].dropObject();
 				updateData();
 				characters = tool.randomAction(characters,getKey());
@@ -264,6 +262,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				break;
 				
 			}
+			characters[0].updateBeliefs(characters, objects);
 			panel.setAnimation(0);
 			panel.setSelec(0);
 			panel.resetOpacity();
