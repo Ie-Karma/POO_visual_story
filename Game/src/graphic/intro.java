@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -32,6 +33,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private object[] objects;
 	private dataTools data = new dataTools();
 	private int state = 0;
+	private String url = ("imgs/tutorial/");
 
 	public intro() throws IOException {
 		
@@ -80,9 +82,12 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		
 		case 0: title(g);break;
 		case 1: goals(g);break;
+		case 2,3,4,5,6,7,8,9,10: 
+			ImageIcon img = new ImageIcon(url + (state-1) + ".png");
+			g.drawImage(img.getImage(), 0, 0, null);
+			break;
 		
 		}	
-		pressIntro(g);
 		
 	}
 	
@@ -124,16 +129,6 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		
 
 	}
-	
-	private void pressIntro(Graphics g) {
-		
-		g.setColor(new Color(255, 50, 50,255));
-		g.fillRoundRect(330, 600, 320, 80, 20, 20);
-		g.setColor(new Color(244, 211, 94,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
-		g.drawString("PRESS INTRO", 360, 655);
-		
-	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -143,7 +138,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		case 82:repaint();break;
 		
 		case 10: 
-			if(state == 1) {
+			if(state == 10) {
 			try {
 				frame = new screenFrame(rooms,characters,objects);
 			} catch (IOException e1) {

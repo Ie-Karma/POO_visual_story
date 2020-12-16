@@ -115,9 +115,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		System.out.println("");
 		System.out.println(round + " rounds after...");
 		System.out.println("");
-		
-		System.out.println("- TOP 3 WINNERS -");
-				
+						
 		character[] winners = new character[3];
 								
 			for(int i = 0; characters[i] != null; i++) {
@@ -242,9 +240,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			break;
 			
 		case (-38):
-		
-			//System.out.println("Accion: " + panel.getAnimation() + ", seleccion: " + panel.getSelec());
-			
+					
 			switch(panel.getAnimation()){
 				
 			case 1:
