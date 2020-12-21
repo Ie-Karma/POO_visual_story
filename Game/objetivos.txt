@@ -4,8 +4,12 @@ Jorge(Jardín)
 Guillermo(Comedor)
 María(Comedor)
 Marcos(Comedor)
+Miguel(Cocina)
+Antonio(Comedor)
+Manuela(Cocina)
+Andrea(Loby)
 <Posesión Objetos>
 Llave(Guillermo)
-Ordenador
+Ordenador(Marcos)
 Cartera(Jorge)
 Movil(Player)

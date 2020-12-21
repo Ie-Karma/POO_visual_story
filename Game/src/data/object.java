@@ -20,15 +20,6 @@ public class object extends DataFather{
 	}
 	
 	/////////////////////////////////////////////////////gets and sets
-	public void getPosition() {
-		
-		if(owner == null) {
-			
-			System.out.print(location.getName());
-			
-		}else {System.out.print(owner.getName());}
-		
-	}
 
 	public character getOwner() {
 		return owner;

@@ -49,7 +49,7 @@ public class screenFrame extends JFrame implements KeyListener{
 		add(panel);
 		
 		addKeyListener(this);
-
+		updateData();
 		
 	}
 	
@@ -154,6 +154,8 @@ public class screenFrame extends JFrame implements KeyListener{
 		switch(key) {
 		
 		case 0:
+			characters[0].setAsked(false);
+			characters[0].setAsker(null);
 			updateData();
 			characters = tool.randomAction(characters,getKey());
 			panel.setAnimation(0);

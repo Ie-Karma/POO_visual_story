@@ -180,8 +180,14 @@ public class screenPanel extends JPanel implements ActionListener{
 		for(int i = selec; characters[0].getObjBeliefs()[i] != null && i<6; i++) {
 			
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
-			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getLocation().getName(), 550, (xm+90) + (i-selec)*70);
 			
+			if(characters[0].getObjBeliefs()[i].getLocation() != null) {
+			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getLocation().getName(), 550, (xm+90) + (i-selec)*70);
+			}
+			
+			if(characters[0].getObjBeliefs()[i].getOwner() != null) {
+			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getOwner().getName(), 550, (xm+90) + (i-selec)*70);
+			}
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
 			
 		}
@@ -285,7 +291,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
 		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
-		g.drawString("-CHARACTERS-", 425, xm+35);
+		g.drawString("-CHARACTERS-", 400, xm+35);
 
 		//selected
 		g.setColor(new Color(240, 246, 0,255));
@@ -315,11 +321,20 @@ public class screenPanel extends JPanel implements ActionListener{
 			}
 			
 		}
+		//Name
+		g.setColor(new Color(84, 92, 82,255));
+		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.drawString(Integer.toString(pos), 300, xm+35);
+		pos = 0;
 		
-		for(int i = selec; toAsk[i] != null; i++) {
+		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setColor(new Color(84, 92, 82,255));
+		
+		for(int i = selec; toAsk[i] != null && pos < 6; i++) {
 			
 				g.drawString(toAsk[i].getName(), 300, (xm+87) + (i-selec)*70);
 				g.drawImage(toAsk[selec].getImg(), 720, xm+87, null);
+				pos++;
 	
 		}
 		
@@ -436,6 +451,8 @@ public class screenPanel extends JPanel implements ActionListener{
 		
 	}
 
+	/////////////////////////////////////////////////////gets and sets
+	
 	public int getAnimation() {
 		return animation;
 	}

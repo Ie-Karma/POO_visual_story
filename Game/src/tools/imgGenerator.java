@@ -63,8 +63,8 @@ public class imgGenerator {
             URL url = new URL(Generator());
             image = ImageIO.read(url);
         } catch (IOException e) {
-        	System.out.println("error trying to catch image");
-        	e.printStackTrace();
+        	System.out.println("ERROR TRYING TO GENERATE IMAGE");
+        	System.out.println(url);
         }
 		
         return image;

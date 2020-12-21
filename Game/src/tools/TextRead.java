@@ -173,19 +173,23 @@ public class TextRead {
 		String todo = getInicio();
 		String name = "";
 		String goal = "";
+		int tam = todo.length();
 		int cont = cont_0;
 		int obj_cont = 0;
 		int char_cont = 0;
+		boolean fin = false;
 		
-		while(cont < todo.length() && todo.charAt(cont) != '<') {
+		while(cont < tam && todo.charAt(cont) != '<' && fin == false) {
 			
-			while(todo.charAt(cont) != '(') {
+
+			while(todo.charAt(cont) != '(' && fin == false) {
 				
 				if(todo.charAt(cont)=='\n'){name = "";goal = "";}else {goal = goal + todo.charAt(cont);}
 								
-				cont++;
-				
+				if(cont == (tam-1)) {fin = true;}else {fin = false;cont++;}
+
 			}
+
 			
 			if(todo.charAt(cont) == '(') {
 				cont++;
@@ -197,7 +201,7 @@ public class TextRead {
 				}
 				
 			}
-			
+
 			for(int i = 0; i<char_num;i++) {
 				
 				if(getChars_ini()[i].getName().equals(name)) {
@@ -207,7 +211,7 @@ public class TextRead {
 				}
 				
 			}
-			
+
 			for(int i = 0; i<obj_num;i++) {
 								
 				if(getObjects_ini()[i].getName().equals(goal)) {
