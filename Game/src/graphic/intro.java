@@ -75,17 +75,16 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		
 		super.paintComponents(g);
 								
-		g.setColor(new Color(84, 92, 82,255));
+		g.setColor(new Color(0, 210, 158,255));
 		g.fillRect(0, 0, 1000, 800);
+		
+		ImageIcon img = new ImageIcon(url + (state+1) + ".png");
+		g.drawImage(img.getImage(), 0, 0, null);
 		
 		switch (state) {
 		
 		case 0: title(g);break;
 		case 1: goals(g);break;
-		case 2,3,4,5,6,7,8,9,10: 
-			ImageIcon img = new ImageIcon(url + (state-1) + ".png");
-			g.drawImage(img.getImage(), 0, 0, null);
-			break;
 		
 		}	
 		
@@ -138,7 +137,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		case 82:repaint();break;
 		
 		case 10: 
-			if(state == 10) {
+			if(state == 11) {
 			try {
 				frame = new screenFrame(rooms,characters,objects);
 			} catch (IOException e1) {

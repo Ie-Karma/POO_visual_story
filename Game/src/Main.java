@@ -10,7 +10,7 @@ public class Main {
 		@SuppressWarnings("unused")
 		intro intro = new intro();			
 		
-		dataTest();
+		//dataTest();
 		
 	}
 

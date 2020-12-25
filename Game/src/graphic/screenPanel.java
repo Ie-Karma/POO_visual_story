@@ -70,7 +70,7 @@ public class screenPanel extends JPanel implements ActionListener{
 
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
 			g.setColor(new Color(240,246,0,255));
-			g.drawString(characters[0].getLocation().getName(), 400, 100 + opacity*(-3));
+			g.drawString(characters[0].getLocation().getName(), 440, 100 + opacity*(-3));
 			
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
 			

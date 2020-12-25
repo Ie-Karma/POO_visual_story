@@ -17,5 +17,5 @@ Andrea(Loby)
 <Objetos>
 Llave(Dormitorio)
 Ordenador(Comedor)
-Cartera(Cocina)
+Cartera(Loby)
 Movil(Guillermo)
