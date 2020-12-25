@@ -9,6 +9,7 @@ import data.*;
 
 public class TextRead {
 
+	//with this class we go through the txt to create the objects
 	private String inicio;
 	private room[] rooms_ini = new room[100];
 	private character[] chars_ini = new character[100];
@@ -20,6 +21,7 @@ public class TextRead {
 	@SuppressWarnings("resource")
 	public TextRead() throws IOException {
 		
+		//first we open the 2 txt and save them into a string
         try {
         	
             BufferedReader br = new BufferedReader(new FileReader("inicio.txt"));
@@ -40,7 +42,7 @@ public class TextRead {
 			
 		} catch (FileNotFoundException e) {
 			
-			System.out.println("No se Pudo Encontrar El Archivo inicio.txt");
+			System.out.println("Could not find or open the file inicio.txt");
 			e.printStackTrace();
 			System.exit(0);
 			
@@ -62,11 +64,11 @@ public class TextRead {
             String string = sb.toString();
             string = string.toUpperCase();
  			setInicio(string);
- 			objectivosData(string);
+ 			goalData(string);
 			
 		} catch (FileNotFoundException e) {
 			
-			System.out.println("No se Pudo Encontrar El Archivo objetivos.txt");
+			System.out.println("Could not find or open the file objetivos.txt");
 			e.printStackTrace();
 			System.exit(0);
 			
@@ -74,12 +76,63 @@ public class TextRead {
 		
 	}
 	
-	private void objectivosData(String todo) {
+	private void inicioData(){
+		
+		int cont = 0;
+		String todo = getInicio();
+		boolean allRooms = false;
+		boolean allChars = false;
+		boolean allObjects = false;
+		
+		//loops through the text until it finds characters like <
+		//when it finds these characters followed by a letter such that L, P or O 
+		//calls its corresponding function to create the rooms, characters or objects respectively
+		while(allRooms ==false && allChars == false && allObjects ==false) {
+			
+			while(cont < todo.length()) {
+				
+				if(todo.charAt(cont) == '<') {
+					
+					cont++;
+					switch (todo.charAt(cont)){
+					
+					case 'L':
+						while(todo.charAt(cont) != '>') {cont++;}
+						cont++;cont++;
+						if(allRooms == false) {inicioDataRooms(cont);allRooms= true;}
+						break;
+						
+					case 'P':
+						while(todo.charAt(cont) != '>') {cont++;}
+						cont++;cont++;
+						if(allChars == false) {inicioDataCharacters(cont);allChars = true;}
+						break;
+						
+					case 'O':
+						while(todo.charAt(cont) != '>') {cont++;}
+						cont++;cont++;
+						if(allObjects == false) {inicioDataObjects(cont);allObjects = true;}
+						break;
+					
+					}
+					
+				}else {cont++;}
+
+			}
+			
+		}
+		
+	}
+	
+	private void goalData(String todo) {
 		
 		int cont = 0;
 		boolean allChars = false;
 		boolean allObjects = false;
 		
+		//loops through the text until it finds characters like <
+		//when it finds these characters followed by a letter such that L, P or O 
+		//calls its corresponding function to determinate the goals
 		while(allChars == false && allObjects == false ) {
 			
 			while(cont < todo.length()) {
@@ -119,6 +172,9 @@ public class TextRead {
 		int loc_cont = 0;
 		int char_cont = 0;
 		
+		//loops from '>' (the beginning of all characters goals) to '<' (the end of characters goals)
+		//if it finds a '(' or a line break, it saves what has been read up to that moment as the character name of the next goal
+		//what is between those parentheses saves it as the location goal of said character
 		while(cont < todo.length() && todo.charAt(cont) != '<') {
 			
 			while(todo.charAt(cont) != '(' && todo.charAt(cont) != '\n') {
@@ -179,6 +235,9 @@ public class TextRead {
 		int char_cont = 0;
 		boolean fin = false;
 		
+		//loops from '>' (the beginning of all objects goals) to '<' (the end of objects goals)
+		//if it finds a '(' or a line break, it saves what has been read up to that moment as the name of the object of the next goal
+		//what is between those parentheses saves it as the goal owner of the object
 		while(cont < tam && todo.charAt(cont) != '<' && fin == false) {
 			
 
@@ -233,7 +292,7 @@ public class TextRead {
 
 	}
 	
-	public void inicioDataRooms(int cont_0) {
+	private void inicioDataRooms(int cont_0) {
 		
 		String todo = getInicio();
 		String name = "";
@@ -241,6 +300,9 @@ public class TextRead {
 		int room_cont = 0;
 		int next = 0;
 		
+		//loops from '>' (the beginning of all rooms) to '<' (the end of rooms)
+		//if it finds a '(' or a line break, it saves what has been read up to that moment as the name of a new room
+		//what is between those parentheses saves it as the rooms accessible from that room
 		while(cont < todo.length() && todo.charAt(cont) != '<') {
 						
 			if(todo.charAt(cont) == '(') {
@@ -316,7 +378,7 @@ public class TextRead {
 		
 	}
 	
-	public void inicioDataCharacters(int cont_0) {
+	private void inicioDataCharacters(int cont_0) {
 		
 		String todo = getInicio();
 		String name = "";
@@ -324,6 +386,9 @@ public class TextRead {
 		int loc_num = 0;
 		String loc = "";
 		
+		//loops from '>' (the beginning of all characters) to '<' (the end of characters)
+		//if it finds a '(' or a line break, it saves what has been read up to that moment as the name of a new character
+		//what is between those parentheses saves it as the location of said character
 		while(cont < todo.length() && todo.charAt(cont) != '<') {
 			
 			if(todo.charAt(cont) == '(') {
@@ -366,7 +431,7 @@ public class TextRead {
 		
 	}
 	
-	public void inicioDataObjects(int cont_0) {
+	private void inicioDataObjects(int cont_0) {
 		
 		String todo = getInicio();
 		String name = "";
@@ -374,6 +439,9 @@ public class TextRead {
 		int loc_num = 0;
 		String loc = "";
 		
+		//loops from '>' (the beginning of all objects) to '<' (the end of objects)
+		//if it finds a '(' or a line break, it saves what has been read up to that moment as the name of a new object
+		//what is between those parentheses saves it as the owner of the object
 		while(cont < todo.length() && todo.charAt(cont) != '<') {
 			
 			if(todo.charAt(cont) == '(') {
@@ -429,53 +497,7 @@ public class TextRead {
 
 		
 	}
-	
-	public void inicioData(){
-		
-		int cont = 0;
-		String todo = getInicio();
-		boolean allRooms = false;
-		boolean allChars = false;
-		boolean allObjects = false;
-		
-		
-		while(allRooms ==false && allChars == false && allObjects ==false) {
-			
-			while(cont < todo.length()) {
-				
-				if(todo.charAt(cont) == '<') {
-					
-					cont++;
-					switch (todo.charAt(cont)){
-					
-					case 'L':
-						while(todo.charAt(cont) != '>') {cont++;}
-						cont++;cont++;
-						if(allRooms == false) {inicioDataRooms(cont);allRooms= true;}
-						break;
-						
-					case 'P':
-						while(todo.charAt(cont) != '>') {cont++;}
-						cont++;cont++;
-						if(allChars == false) {inicioDataCharacters(cont);allChars = true;}
-						break;
-						
-					case 'O':
-						while(todo.charAt(cont) != '>') {cont++;}
-						cont++;cont++;
-						if(allObjects == false) {inicioDataObjects(cont);allObjects = true;}
-						break;
-					
-					}
-					
-				}else {cont++;}
 
-			}
-			
-		}
-		
-	}
-	
 	///////////////////////////////////////////////////////////Sets and Gets
 	
 	public String getInicio() {

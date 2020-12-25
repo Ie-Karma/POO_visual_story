@@ -13,6 +13,7 @@ public class dataTools {
 		
 	public boolean endGame(character[] ch) {
 		
+		//a function just to determine if all the characters have finished their goals
 		boolean end = true;
 		characters = ch;
 		
@@ -32,8 +33,7 @@ public class dataTools {
 	
 	public character[] playerOnArray(character[] ch) {
 		
-		//move player to characters[0]
-		
+		//a function to make the player character position = 0 on the characters array
 		characters = ch;
 		int pos = 0;
 		
@@ -59,7 +59,6 @@ public class dataTools {
 	public void updateData(room[] rm, character[] ch, object[] obj){
 		
 		//updates current data values
-		
 		rooms=rm;
 		characters = ch;
 		objects = obj;
@@ -69,7 +68,6 @@ public class dataTools {
 	public room[] updateRooms(room[] rm) {
 	
 		//update and return rooms values with the changes of guests and objects
-		
 		rooms = rm;
 		updateRoomsGuests();
 		updateRoomObjects();
@@ -80,7 +78,6 @@ public class dataTools {
 	private void updateRoomsGuests() {
 		
 		//take the location of each character to update the number of guests in rooms
-		
 		for(int i = 0; rooms[i] != null; i++) {
 			
 			rooms[i].setGuestsNum(0);
@@ -100,7 +97,6 @@ public class dataTools {
 	private void updateRoomObjects() {
 		
 		//take the location of each object to update the number of guests in rooms
-		
 		for(int o = 0; rooms[o] != null; o++) {
 			
 			int x = 0;

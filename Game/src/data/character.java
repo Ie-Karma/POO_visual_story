@@ -6,24 +6,33 @@ import tools.imgGenerator;
 
 public class character extends DataFather{
 	
+	//general information attributes
 	private room location;
 	private object object = null;
 	
+	//a boolean to know when a character is asked
+	//and a character to know who is asking
 	private boolean asked = false;
 	private character asker;
 	
+	//we save in goal_location and goal_object the goals that each character has
 	private room goal_location;
 	private object goal_object;
 	
+	//we use goal_obj so if it is false we know that our chatacter has his goal object
+	//we save on img the Image that we generated with imgGenerator to identify each character
+	//and we use medal to know when the character has finish all his goals so we can make a podium
 	private boolean goal_obj = false;
 	private Image img;
 	private int medal = -1;
 	
+	//with this arrays we can have a beliefs list with all the character and objects
 	private character[] CharBeliefs = new character[100];
 	private object[] ObjBeliefs = new object[100];
 		
 	public character(String name_set) {
 		
+		//generate a new image for this character and set his name
 		imgGenerator gen = new imgGenerator();
 		setImg(gen.img);
 		setName(name_set);
@@ -32,6 +41,7 @@ public class character extends DataFather{
 
 	public boolean completeGoal() {
 				
+		//this function is used to check if the character has completed its goals 
 		if(goal_object == object) {
 			
 			goal_obj = true;
@@ -42,6 +52,8 @@ public class character extends DataFather{
 
 			if( goal_object == null && object != null) {
 				
+				//if a character had no object goal, when he meets his location goal with an object he will be forced to drop it
+				//thus we avoid an infinite loop in which another character does not find the object he needs
 				dropObject();
 				
 			}
@@ -59,12 +71,14 @@ public class character extends DataFather{
 	
 	public void moveTo(room newRoom) {
 		
+		//we replace the current room with the new one
 		location = newRoom;
 		
 	}	
 	
 	public void takeObject(object newObject) {
 		
+		//we replace the current object with the new one
 		object = newObject;
 		object.setOwner(this);
 		
@@ -72,14 +86,25 @@ public class character extends DataFather{
 	
 	public void dropObject() {
 		
+		//we update the location of the object to the room in which the character is located
 		object.setLocation(location);
+		
+		for(int i = 0; ObjBeliefs[i] != null; i++) {
+			
+			if(ObjBeliefs[i].getName().equals(object.getName())) {
+				
+				ObjBeliefs[i].setLocation(location);
+				
+			}
+			
+		}
+		
+		//we use the function dropObject on the object class to update his data
 		object.dropObject();
 		object = null;
 		
 	}
-	
-	public void skip() {}
-	
+		
 	/////////////////////////////////////////////////////gets and sets
 	
 	public room getLocation() {

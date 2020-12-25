@@ -8,17 +8,7 @@ public class actionsTools {
 		
 	public character[] randomAction(character[] character, int key) {
 		
-		/*
-		options:
-		
-		skip = 0
-		move to = 1
-		ask for = 2 (no object)
-		give to = 3
-		take object = 4 (no object)
-		drop object = 5
-		*/
-		
+		//we use this class to determine the random actions that the rest of the characters take
 		for(int i = 1; character[i] != null; i++) {
 
 		object obj;
@@ -28,12 +18,12 @@ public class actionsTools {
 				
 		obj = character[i].getObject();
 
+		//we generate a random number only with the options that the character can make
 		if(character[i].completeGoal() == true) {
 			
 			if(character[i].getMedal() == -1) {
 				
 				character[i].setMedal(podium);
-				//System.out.println("Podium de " + character[i].getName());
 				podium++;
 				
 			}
@@ -41,7 +31,6 @@ public class actionsTools {
 
 			if(character[i].getObject() != null && character[i].getObject().equals(character[i].getGoal_object())==false) {
 				choice = 5;
-				//System.out.println(character[i].getName() + " has droped to finish.");
 			}
 			
 		}else {
@@ -78,41 +67,41 @@ public class actionsTools {
 
 		}
 		
-		//System.out.print(character[i].getName() + " has chosen ");
-		
+		//when we have the random number we execute the corresponding action 
 		switch(choice) {
 		
 		case 0: 	
-			//System.out.println("SKIP");	
-			character[i].skip();
+			
+			//SKIP	
 			break;
 			
 		case 1: 	
-			//System.out.print("MOVE TO ");	
+			
+			//MOVE TO 	
 			character[i].moveTo(randomRoom(character[i]));
-			//System.out.println(character[i].getLocation().getName());
 			break;
 			
 		case 2: 	
-			//System.out.print("ASK TO ");	
+			
+			//ASK TO
 			randomAsked(character[i],1);
 			break;
 			
-		case 3: 	
-			//System.out.println("GIVE TO " + character[i].getAsker().getName());	
+		case 3: 
+			
+			//GIVE TO	
 			giveObject(character[i]);
 			break;
 			
 		case 4: 	
-			//System.out.print("TAKE ");	
+			
+			//TAKE	
 			character[i].takeObject(character[i].getLocation().getObjects()[(int)(Math.random()*(character[i].getLocation().getObjectsNum()))]);
 			character[i].getObject().setLocation(null);
-			//System.out.println(character[i].getObject().getName());
 			break;
 			
 		case 5: 	
-			//System.out.print("DROP ");
-			//System.out.println(character[i].getObject().getName());
+			//DROP
 			character[i].dropObject();
 			break;
 
@@ -125,14 +114,12 @@ public class actionsTools {
 	
 	private void giveObject(character character) {
 		
+		//we replace the owner of the selecter object
 		if(((int)(Math.random()*4))>0) {
 			
 			object obj = character.getObject();
 			character.setObject(null);
 			character.getAsker().takeObject(obj);;
-			
-			//System.out.println(obj.getName() + " Entregado a " + obj.getOwner().getName());
-
 		}
 		
 		character.setAsked(false);
@@ -142,6 +129,7 @@ public class actionsTools {
 	
 	private room randomRoom(character character) {
 		
+		//we select a random room between all the available rooms
 		room[] rooms;
 		int rand = 0;
 		int nextNum = 0;
@@ -161,6 +149,7 @@ public class actionsTools {
 	
 	private int randomAsked(character character,int com) {
 		
+		//we select a random character between all the characters in the same room
 		character[] people;
 		int peopleNum = 0;
 		
@@ -195,15 +184,15 @@ public class actionsTools {
 				
 				people[random].setAsked(true);
 				people[random].setAsker(character);
-				
-				//System.out.println(people[random].getName());
-			
+							
 		}
 
 		return peopleNum;
 		
 	}
 		
+	/////////////////////////////////////////////////////gets and sets
+	
 	public int getPodium() {
 		
 		return podium;

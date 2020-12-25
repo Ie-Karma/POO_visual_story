@@ -10,11 +10,11 @@ import data.character;
 
 public class screenPanel extends JPanel implements ActionListener{
 		
-	@SuppressWarnings("unused")
-	private String url_pres = new String("imgs/pressed_buttons/");
+	//we create some urls string to make the image creation shorter
 	private String url_all = new String("imgs/all_buttons/");
 	private String url_dis = new String("imgs/disabled_buttons/");
 	
+	//we create all the images that we are gonna need
 	private ImageIcon ask = new ImageIcon(url_dis + "ask_to.png");
 	private ImageIcon drop = new ImageIcon(url_dis + "drop.png");
 	private ImageIcon give = new ImageIcon(url_dis + "give.png");
@@ -42,6 +42,7 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	public screenPanel() {
 			
+		//we create and start a timer so we can make a repaint() with actionPerformed each 2ms
 		Timer tm = new Timer(2,this);
 		tm.start();
 		
@@ -49,16 +50,19 @@ public class screenPanel extends JPanel implements ActionListener{
 	
 	public void paint (Graphics g) {
 				
+		//we implement Graphics to paint String and images to make the animations and the GUI
 		super.paintComponents(g);
 								
 		g.setColor(new Color(84, 92, 82,255));
 		g.fillRect(0, 0, 1000, 800);
 		
+		//we check if the game still continues
 		if(endScene == false) {
 			
 			g.setColor(characters[0].getLocation().getColor());
 			g.fillRoundRect(10,9, 965, 695, 50, 50);
 									
+			//we draw all the images generating the complete GUI
 			g.drawImage(player_img.getImage(), 395, opacity + 405 + offPacity, null);
 			g.drawImage(ask.getImage(), opacity*3, 0, null);
 			g.drawImage(drop.getImage(), opacity*3, opacity*3, null);
@@ -68,12 +72,14 @@ public class screenPanel extends JPanel implements ActionListener{
 			g.drawImage(take.getImage(), opacity*(-1)*3, opacity*3, null);
 			g.drawImage(top.getImage(), 0, opacity*(-3), null);
 
+			//draw the name of the location
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
 			g.setColor(new Color(240,246,0,255));
 			g.drawString(characters[0].getLocation().getName(), 440, 100 + opacity*(-3));
 			
 			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
 			
+			//and if the player has object we print its name
 			if(characters[0].getObject() != null) {
 				
 				g.drawString(characters[0].getObject().getName(), 750, 97 + opacity*(-3));
@@ -84,6 +90,7 @@ public class screenPanel extends JPanel implements ActionListener{
 				
 			}
 			
+			//we activate the list and animations depending the Animation that the player has selected on screenFrame keylistener
 			switch (getAnimation()) {
 			
 			case 1:roomList(g);break;
@@ -95,6 +102,8 @@ public class screenPanel extends JPanel implements ActionListener{
 			}
 
 		}else {
+			
+			//if the game has ended we draw the podiums with the winners
 			
 			//podiums
 			g.setColor(new Color(240, 246, 0,255));
@@ -133,6 +142,10 @@ public class screenPanel extends JPanel implements ActionListener{
 			
 		}		
 		
+		//we print invisible rectangles that cover all the screen
+		//theis opacity depends on offpacity and opacity
+		//with that we can make some fade animations
+		
 		//fade rect
 		g.setColor(new Color(84, 92, 82,opacity));
 		g.fillRect(0, 0, 1000, 800);
@@ -145,9 +158,12 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(255,255,255,offPacity));
 		g.setFont(new Font("vcr osd mono", Font.PLAIN,150) );
 		g.drawString("GOOD BYE", 150, 350);
+		
 	}
 	
 	private void beliefsList(Graphics g) {
+		
+		//we draw the whole beliefs list
 		
 		//shadow
 		g.setColor(new Color(84, 92, 82,255));
@@ -196,7 +212,8 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	private void giveTo(Graphics g) {
 		
-		//character img cover
+		//we draw a menu with S(yes) or ESC(no) to select if the player gives or thot his object
+		
 		//shadow
 		g.setColor(new Color(84, 92, 82,255));
 		g.fillRoundRect(700, xm+72, 278, 290, 60, 60);
@@ -233,6 +250,8 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	private void objectsList(Graphics g) {
 
+		//we draw a list with all the objects in the same room as the player
+		
 		max = 0;
 		for(int i = 0;characters[0].getLocation().getObjects()[i] != null; i++) {
 			max++;
@@ -271,6 +290,8 @@ public class screenPanel extends JPanel implements ActionListener{
 	}
 
 	private void charactersList(Graphics g) {
+		
+		//we draw a list with all the characters in the same room as the player
 		
 		max = 0;
 		
@@ -342,6 +363,8 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	private void roomList(Graphics g) {
 		
+		//we draw a list with all the accessible rooms from the actual player room
+		
 		max = 0;
 		for(int i = 0;characters[0].getLocation().getNextTo()[i] != null; i++) {
 			max++;
@@ -382,6 +405,8 @@ public class screenPanel extends JPanel implements ActionListener{
 
 	public character[] updateImages(character[] characters_0) {
 				
+		//we replace the images of the GUI depending on the options that the player can make
+		
 		characters = characters_0;
 				
 		ask = new ImageIcon(url_dis + "ask_to.png");

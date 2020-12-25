@@ -2,6 +2,8 @@ package data;
 
 public class object extends DataFather{
 	
+	//we save the location of the object in this two objects
+	//depending on whether someone owns it or is thrown away
 	private character owner;
 	private room location;
 	
@@ -15,6 +17,7 @@ public class object extends DataFather{
 	
 	public void dropObject() {
 		
+		//we delete the owner
 		owner = null;
 		
 	}
