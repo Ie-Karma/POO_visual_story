@@ -3,6 +3,8 @@ package graphic;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -38,10 +40,36 @@ public class screenPanel extends JPanel implements ActionListener{
 	private character[] characters;
 	private character[] winners;
 	
+	private Font font100;
+	private Font font150;
+	private Font font40;
+	private Font font30;
+	private Font font20;
+	
 	private static final long serialVersionUID = 1L;
 
 	public screenPanel() {
 			
+		//we create 4 fonts with different sizes
+		try {
+			
+		     GraphicsEnvironment ge = 
+		         GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     font40 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(40f);
+		     font30 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(30f);
+		     font20 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(20f);
+		     font100 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(100f);
+		     font150 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(150f);
+		     ge.registerFont(font100);
+		     ge.registerFont(font150);
+		     ge.registerFont(font40);
+		     ge.registerFont(font30);
+		     ge.registerFont(font20);
+
+		} catch (IOException|FontFormatException e) {
+		     System.out.println("error, font not found");
+		}
+		
 		//we create and start a timer so we can make a repaint() with actionPerformed each 2ms
 		Timer tm = new Timer(2,this);
 		tm.start();
@@ -73,11 +101,11 @@ public class screenPanel extends JPanel implements ActionListener{
 			g.drawImage(top.getImage(), 0, opacity*(-3), null);
 
 			//draw the name of the location
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
+			g.setFont(font40);
 			g.setColor(new Color(240,246,0,255));
 			g.drawString(characters[0].getLocation().getName(), 440, 100 + opacity*(-3));
 			
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			g.setFont(font30);
 			
 			//and if the player has object we print its name
 			if(characters[0].getObject() != null) {
@@ -112,7 +140,7 @@ public class screenPanel extends JPanel implements ActionListener{
 			g.fillRoundRect(640, xm-190, 165, 1000, 20, 20);
 			
 			//pos
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,100) );
+			g.setFont(font100);
 			g.setColor(new Color(84, 92, 82,255));
 			g.drawString("1", 465, xm-280);
 			g.drawString("2", 245, xm-180);
@@ -120,7 +148,7 @@ public class screenPanel extends JPanel implements ActionListener{
 
 			//names
 			g.setColor(new Color(240, 246, 0,255));
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			g.setFont(font30);
 			g.drawString(winners[0].getName(), 440, xm-630);
 			g.drawString(winners[1].getName(), 220, xm-530);
 			g.drawString(winners[2].getName(), 670, xm-430);
@@ -134,7 +162,7 @@ public class screenPanel extends JPanel implements ActionListener{
 			if((int)(opacity_2) > 0) {g.setColor(new Color(0,0,0,((int)(opacity_2))));}
 			else {g.setColor(new Color(0,0,0,0));}
 			g.fillRect(0, 0, 1000, 800);
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,150) );
+			g.setFont(font150);
 			if((int)(opacity_2) > 0) {g.setColor(new Color(84, 92, 82,((int)(opacity_2))));}
 			else {g.setColor(new Color(84, 92, 82,0));}
 			g.drawString("The game", 130, 300);
@@ -156,7 +184,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		
 		//good bye
 		g.setColor(new Color(255,255,255,offPacity));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,150) );
+		g.setFont(font150);
 		g.drawString("GOOD BYE", 150, 350);
 		
 	}
@@ -186,16 +214,16 @@ public class screenPanel extends JPanel implements ActionListener{
 		//beliefs	
 		for(int i = selec+1; characters[0].getCharBeliefs()[i] != null && i<6; i++) {
 			
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+			g.setFont(font20);
 			g.drawString(characters[0].getCharBeliefs()[i].getName() + " was in "+characters[0].getCharBeliefs()[i].getLocation().getName(), 150, (xm+90) + (i-selec-1)*70);
 			
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			g.setFont(font30);
 			
 		}
 		
 		for(int i = selec; characters[0].getObjBeliefs()[i] != null && i<6; i++) {
 			
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+			g.setFont(font20);
 			
 			if(characters[0].getObjBeliefs()[i].getLocation() != null) {
 			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getLocation().getName(), 550, (xm+90) + (i-selec)*70);
@@ -204,7 +232,7 @@ public class screenPanel extends JPanel implements ActionListener{
 			if(characters[0].getObjBeliefs()[i].getOwner() != null) {
 			g.drawString(characters[0].getObjBeliefs()[i].getName() + " was in "+characters[0].getObjBeliefs()[i].getOwner().getName(), 550, (xm+90) + (i-selec)*70);
 			}
-			g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+			g.setFont(font30);
 			
 		}
 		
@@ -231,7 +259,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.fillRoundRect(280, xm+120, 430, 200, 50, 50);
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.setFont(font20);
 		g.drawString("Do you want to give ",380,xm+150);
 		g.drawString(characters[0].getObject().getName()
 		+ " to " + characters[0].getAsker().getName() + "?", 390, xm+170);
@@ -240,7 +268,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.fillRoundRect(350, xm+220, 100, 70,30,30);
 		g.fillRoundRect(520, xm+220, 100, 70,30,30);
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.drawString("YES",373,xm+250);
 		g.drawString("(S)",373,xm+280);
 		g.drawString("NO",553,xm+250);
@@ -265,7 +293,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.fillRoundRect(280, xm, 430, 459, 50, 50);
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.drawString("-OBJECTS-", 425, xm+35);
 
 		//selected
@@ -274,12 +302,12 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(255, 100, 123,255));
 		g.fillRoundRect(580, xm+57, 100, 40, 30, 30);
 		//ENTER
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.setFont(font20);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("ENTER", 600, xm+86);
 		
 		//characters	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.setColor(new Color(84, 92, 82,255));
 		for(int i = selec; characters[0].getLocation().getObjects()[i] != null; i++) {
 			
@@ -311,7 +339,7 @@ public class screenPanel extends JPanel implements ActionListener{
 
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.drawString("-CHARACTERS-", 400, xm+35);
 
 		//selected
@@ -320,12 +348,12 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(255, 100, 123,255));
 		g.fillRoundRect(580, xm+57, 100, 40, 30, 30);
 		//ENTER
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.setFont(font20);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("ENTER", 600, xm+86);
 		
 		//characters	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.setColor(new Color(84, 92, 82,255));
 		
 		toAsk= new character[characters[0].getLocation().getGuestsNum()];
@@ -344,11 +372,11 @@ public class screenPanel extends JPanel implements ActionListener{
 		}
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.drawString(Integer.toString(pos), 300, xm+35);
 		pos = 0;
 		
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.setColor(new Color(84, 92, 82,255));
 		
 		for(int i = selec; toAsk[i] != null && pos < 6; i++) {
@@ -379,7 +407,7 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.fillRoundRect(280, xm, 430, 459, 50, 50);
 		//Name
 		g.setColor(new Color(84, 92, 82,255));
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.drawString("-ROOMS-", 425, xm+35);
 
 		//selected
@@ -388,12 +416,12 @@ public class screenPanel extends JPanel implements ActionListener{
 		g.setColor(new Color(255, 100, 123,255));
 		g.fillRoundRect(580, xm+57, 100, 40, 30, 30);
 		//ENTER
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.setFont(font20);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("ENTER", 600, xm+86);
 		
 		//characters	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,30) );
+		g.setFont(font30);
 		g.setColor(new Color(84, 92, 82,255));
 		for(int i = selec; characters[0].getLocation().getNextTo()[i] != null; i++) {
 			

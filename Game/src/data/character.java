@@ -197,7 +197,8 @@ public class character extends DataFather{
 				
 				if(objects[i].getLocation().equals(location)) {
 					
-					ObjBeliefs[i].setLocation(characters[i].getLocation());
+					ObjBeliefs[i].setLocation(characters[0].getLocation());
+					System.out.println(ObjBeliefs[i].getName() + "  "  + ObjBeliefs[i].getLocation().getName());
 					
 				}
 				

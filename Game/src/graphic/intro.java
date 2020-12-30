@@ -3,6 +3,7 @@ package graphic;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -33,7 +35,10 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private dataTools data = new dataTools();
 	private int state = 0;
 	private String url = ("imgs/tutorial/");
+	private Font font40;
+	private Font font20;
 
+	
 	public static void main(String[] args) throws IOException {
 		
 		//we start the game
@@ -43,6 +48,20 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 
 	
 	public intro() throws IOException {
+		
+		//we create 2 fonts with different sizes
+		try {
+			
+		     GraphicsEnvironment ge = 
+		         GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     font40 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(40f);
+		     font20 = Font.createFont(Font.TRUETYPE_FONT, new File("font_1.ttf")).deriveFont(20f);
+		     ge.registerFont(font40);
+		     ge.registerFont(font20);
+
+		} catch (IOException|FontFormatException e) {
+		     System.out.println("error, font not found");
+		}
 		
 		//we delete the window borders
 		setUndecorated(true);
@@ -115,14 +134,14 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		g.setColor(new Color(244, 211, 94,255));
 		g.fillRoundRect(100, 100, 800, 100, 20, 20);
 	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
+		g.setFont(font40);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("Wellcome to U-TAD Visual Story", 150, 160);
 	
 		g.setColor(new Color(244, 211, 94,255));
 		g.fillRoundRect(355, 500, 270, 50, 20, 20);
 	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,20) );
+		g.setFont(font20);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("By Mario Gallego Cano", 370, 530);
 		
@@ -134,7 +153,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		g.setColor(new Color(244, 211, 94,255));
 		g.fillRoundRect(350, 50, 270, 100, 20, 20);
 	
-		g.setFont(new Font("vcr osd mono", Font.PLAIN,40) );
+		g.setFont(font40);
 		g.setColor(new Color(84, 92, 82,255));
 		g.drawString("YOUR GOALS", 365, 110);
 		

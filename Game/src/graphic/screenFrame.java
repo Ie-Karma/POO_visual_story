@@ -137,6 +137,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			//we open a list of objects in that room only if the player doesn't have any object
 			if(characters[0].getObject() == null && characters[0].getLocation().getObjectsNum() > 0) {
 				
+				System.out.println("taking");
 				panel.setAnimation(4);
 				
 			}

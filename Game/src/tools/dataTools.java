@@ -96,17 +96,38 @@ public class dataTools {
 	
 	private void updateRoomObjects() {
 		
-		//take the location of each object to update the number of guests in rooms
+		boolean rep = false;
+		//take the location of each object to update the of objtects in rooms
 		for(int o = 0; rooms[o] != null; o++) {
 			
 			int x = 0;
+			rep = false;
+
+			for(int i = 0; rooms[o].getObjects()[i] != null; i++) {
+				
+				rooms[o].getObjects()[i] = null;
+				
+			}
 			
 			for(int i = 0; objects[i] != null; i++) {
 			
+				
 				if(objects[i].getLocation()==rooms[o]) {
 					
-					rooms[o].setObjects(x,objects[i]);
+					for(int z = 0; rooms[o].getObjects()[z] != null; z++) {
+						
+						if(rooms[o].getObjects()[z].equals(objects[i])) {
+							
+							rep = true;
+							
+						}
+						
+					}
+
+					
+					if(rep == false) {rooms[o].setObjects(x,objects[i]);
 					x++;
+					}
 					
 				}
 				
