@@ -6,8 +6,14 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 import tools.*;
@@ -53,6 +59,9 @@ public class screenFrame extends JFrame implements KeyListener{
 		//now we use the KeyListener in this class and not in intro
 		addKeyListener(this);
 		updateData();
+		
+		playSound("finish");
+		//playSound("soundtrack");
 		
 	}
 	
@@ -100,13 +109,15 @@ public class screenFrame extends JFrame implements KeyListener{
 			panel.setAnimation(0);
 			panel.setSelec(0);
 			panel.resetOpacity();
+			playSound("skip");
 			break;
 			
 		case 1: 	
 			
 			// MOVE TO
 			//we open the rooms list
-			panel.setAnimation(1);					
+			panel.setAnimation(1);	
+			playSound("menu");
 			break;
 			
 		case 2:
@@ -116,6 +127,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			if(characters[0].getObject() == null && characters[0].getLocation().getGuestsNum() > 1) {
 				
 				panel.setAnimation(2);
+				playSound("menu");
 								
 			}
 			break;
@@ -127,6 +139,7 @@ public class screenFrame extends JFrame implements KeyListener{
 			if(characters[0].isAsked() && characters[0].getObject() != null) {
 				
 				panel.setAnimation(3);
+				playSound("menu");
 				
 			}
 			break;
@@ -137,8 +150,8 @@ public class screenFrame extends JFrame implements KeyListener{
 			//we open a list of objects in that room only if the player doesn't have any object
 			if(characters[0].getObject() == null && characters[0].getLocation().getObjectsNum() > 0) {
 				
-				System.out.println("taking");
 				panel.setAnimation(4);
+				playSound("menu");
 				
 			}
 			break;
@@ -156,6 +169,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				panel.setAnimation(0);
 				panel.setSelec(0);
 				panel.resetOpacity();
+				playSound("drop");
 				
 			}break;
 		
@@ -164,18 +178,21 @@ public class screenFrame extends JFrame implements KeyListener{
 			//BELIEFS
 			//we open the beliefs list
 			panel.setAnimation(6);
+			playSound("menu");
 			break;
 			
 		case (-8):
 			
 			//use this to move between the options in the lists
 			panel.increaseSelec();
+			playSound("click");
 			break;
 		
 		case (-10):
 			
 			//use this to move between the options in the lists
 			panel.decreaseSelec();
+			playSound("click");
 			break;
 			
 		case (-21):
@@ -186,11 +203,13 @@ public class screenFrame extends JFrame implements KeyListener{
 			panel.increaseOffPacity();
 			if(panel.getOffPacity() == 255) {
 				
+				playSound("finish");
 				System.exit(0);
 				
 			}
 			panel.setAnimation(0);
 			panel.setSelec(0);
+			playSound("click");
 			break;
 				
 		case (35):
@@ -204,7 +223,8 @@ public class screenFrame extends JFrame implements KeyListener{
 				giveObject();				
 				updateData();
 				characters = tool.randomAction(characters,getKey());
-
+				playSound("drop");
+				
 			}
 			break;
 			
@@ -222,6 +242,8 @@ public class screenFrame extends JFrame implements KeyListener{
 				updateData();
 				characters = tool.randomAction(characters,getKey());
 				if(characters[0].completeGoal()) {finish();}
+				playSound("move");
+
 				break;
 				
 			case 2:
@@ -232,6 +254,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				panel.getToAsk()[panel.getSelec()].setAsker(characters[0]);
 				updateData();
 				characters = tool.randomAction(characters,getKey());
+				playSound("menu");
 				break;
 				
 			case 4:
@@ -241,6 +264,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				characters[0].takeObject(characters[0].getLocation().getObjects()[panel.getSelec()]);
 				updateData();
 				characters = tool.randomAction(characters,getKey());
+				playSound("take");
 				break;
 				
 			}
@@ -256,6 +280,26 @@ public class screenFrame extends JFrame implements KeyListener{
 		updateData();
 		panel.updateImages(characters);
 
+	}
+	
+	private void playSound(String sound) {
+		
+		//create a file with the sound name
+		File f = new File("sounds/"+sound + ".wav");
+		
+		//and try to add it lije an AudioInput to playe it in a System Clip
+		try {
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+		    Clip clip = AudioSystem.getClip();
+		    clip.open(audioIn);
+		    clip.start();
+		    
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+
+			System.out.println("sound error");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void unnAsked() {
@@ -319,6 +363,8 @@ public class screenFrame extends JFrame implements KeyListener{
 		//when they all finish we create a podium with the 3 first ones 
 		//we take that from their Medal
 		int round = 0;
+		
+		playSound("finish");
 		
 		characters[0].setMedal(tool.getPodium());
 		tool.setPodium((tool.getPodium()+1));

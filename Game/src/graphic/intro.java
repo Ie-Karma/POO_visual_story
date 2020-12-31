@@ -14,6 +14,11 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -38,7 +43,6 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 	private Font font40;
 	private Font font20;
 
-	
 	public static void main(String[] args) throws IOException {
 		
 		//we start the game
@@ -46,7 +50,6 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		
 	}
 
-	
 	public intro() throws IOException {
 		
 		//we create 2 fonts with different sizes
@@ -86,6 +89,24 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		//we add a keylistener to know when the player press any key
 		addKeyListener(this);
 				
+	}
+	
+	private void playSound(String sound) {
+		
+		File f = new File("sounds/"+sound + ".wav");
+		
+		try {
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+		    Clip clip = AudioSystem.getClip();
+		    clip.open(audioIn);
+		    clip.start();
+		    
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+
+			System.out.println("sound error");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void centerFrame() {
@@ -179,6 +200,7 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 			
 			//in case he is pressing ENTER we advance the state and repaint the images
 			//when the state is 11 we create a screenframe with the data we have read from the txt
+			playSound("click");
 			if(state == 11) {
 			try {
 				frame = new screenFrame(rooms,characters,objects);

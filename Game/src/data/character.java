@@ -19,7 +19,7 @@ public class character extends DataFather{
 	private room goal_location;
 	private object goal_object;
 	
-	//we use goal_obj so if it is false we know that our chatacter has his goal object
+	//we use goal_obj so if it is true we know that our chatacter has his goal object
 	//we save on img the Image that we generated with imgGenerator to identify each character
 	//and we use medal to know when the character has finish all his goals so we can make a podium
 	private boolean goal_obj = false;
@@ -198,7 +198,6 @@ public class character extends DataFather{
 				if(objects[i].getLocation().equals(location)) {
 					
 					ObjBeliefs[i].setLocation(characters[0].getLocation());
-					System.out.println(ObjBeliefs[i].getName() + "  "  + ObjBeliefs[i].getLocation().getName());
 					
 				}
 				
