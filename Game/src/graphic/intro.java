@@ -78,6 +78,9 @@ public class intro extends JFrame implements KeyListener, ActionListener{
 		characters = data.playerOnArray(characters);
 				
 		//some frame settings 
+		ImageIcon icon = new ImageIcon("imgs/icon.png");
+		
+		setIconImage(icon.getImage());
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
 		setResizable(false);

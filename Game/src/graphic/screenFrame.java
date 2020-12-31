@@ -14,6 +14,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import tools.*;
@@ -46,6 +47,9 @@ public class screenFrame extends JFrame implements KeyListener{
 		//we create a screenpanel that we use to paint and draw the GUI
 		panel = new screenPanel();
 		
+		ImageIcon icon = new ImageIcon("imgs/icon.png");
+		
+		setIconImage(icon.getImage());
 		setTitle("Visual Story - By Mario Gallego Cano");
 		setVisible(true);
 		setResizable(false);
@@ -169,6 +173,7 @@ public class screenFrame extends JFrame implements KeyListener{
 				panel.setAnimation(0);
 				panel.setSelec(0);
 				panel.resetOpacity();
+				updateData();
 				playSound("drop");
 				
 			}break;
